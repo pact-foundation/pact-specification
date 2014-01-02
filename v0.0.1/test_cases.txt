@@ -1,0 +1,20 @@
+1. Value match
+1.1 Extra keys not allowed
+1.1.1 Pass
+1.1.2.1 Fail - Hash
+1.1.2.1.1 Fail - Unexpected value found at key
+1.1.2.1.2 Fail - Missing key where a non-null value was expected
+1.1.2.1.3 Fail - Missing key where a null value was expected
+1.1.2.1.4 Fail - Not-null value expected but null value found
+1.1.2.1.5 Fail - Null value expected but not-null value found
+1.1.2.1.6 Fail - Extra key with non-null value found
+1.1.2.1.7 Fail - Extra key with null value found
+
+1.1.2.2 Fail - Array
+1.1.2.2.1 Fail - Unexpected value found at index
+1.1.2.2.2 Fail - Extra element in array
+1.1.2.2.3 Fail - Missing element in array
+1.1.2.2.4 Fail - Null element expected in array but not-null value found
+1.1.2.2.5 Fail - Extra element with null value found
+
+1.2 Extra keys allowed
