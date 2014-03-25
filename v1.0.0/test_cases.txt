@@ -1,0 +1,39 @@
+REQUEST METHOD
+1.1 Pass - exactly same method
+1.2.1 Fail - wrong case (maybe this should pass?)
+1.2.2 Fail - wrong method
+
+REQUEST PATH
+2.1.1 Pass - matches exactly without trailing slash
+2.1.2 Pass - matches exactly with trailing slash
+2.2.1 Fail - extra trailing slash
+2.2.2 Fail - missing trailing slash
+
+REQUEST HEADERS
+3.1.1 Pass - Matches exactly
+3.1.2 Pass - Extra headers found and allowed
+3.2.1 Fail - Unexpected value found in header
+3.2.2 Fail - Missing header
+
+REQUEST BODY
+4.1 Pass with Hash and Array, nulls and not nulls
+4.2 Fail - Hash
+4.2.1 Fail - Unexpected value found at key in body
+4.2.2 Fail - Missing key where a non-null value was expected in body
+4.2.3 Fail - Missing key where a null value was expected in body
+4.2.4 Fail - Not-null value expected but null value found in body
+4.2.5 Fail - Null value expected but not-null value found in body
+4.2.6 Fail - Extra key with non-null value found in body
+4.2.7 Fail - Extra key with null value found in body
+
+4.2 Fail - Array
+4.2.1 Fail - Unexpected value found at index in body
+4.2.2 Fail - Extra element in array in body
+4.2.3 Fail - Missing element in array in body
+4.2.4 Fail - Null element expected in array but not-null value found in body
+4.2.5 Fail - Extra element with null value found in body
+
+RESPONSE STATUS
+
+RESPONSE HEADERS
+RESPONSE BODY

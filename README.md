@@ -11,37 +11,3 @@ To support consistency of matching logic, this specification has been developed 
 * When writing the matching rules, err on the side of being more strict now, because it will break fewer things to be looser later, than to get stricter later.
 
 Note: One implications of this philosophy is that you cannot verify, using pact, that a key or a header will _not_ be present in a response. You can only verify what _is_.
-
-#### Request matching
-
-1. Request method
-
-Exact string match, case sensitive (expects lower case). Should this be case insensitive?
-
-1. Request path
-
-Exact string match.
-
-1. Request headers
-
-Exact string match for expected header names and values. Allow unexpected headers to be sent out, as frameworks and network utilities are likely to set their own headers (eg. User-Agent), and it would increase the maintenance burden to have to track all of those.
-
-1. Request body
-
-* Do not allow unexpected keys to be sent in the body.
-* Do not allow unexpected items in an array. Most parsing code will do a "for each" on an array, and if we expect one item, but two go out, we have "leaked" information.
-
-#### Response matching
-
-1. Response status
-
-Exact integer match.
-
-1. Response headers
-
-Exact string match for expected header names and values. Allow unexpected headers to be sent back, as in reality, as extra headers will be added by network utilities and server frameworks.
-
-1. Response body
-
-* Allow unexpected keys to be sent back in the body.
-* Do not allow unexpected items in an array. Most parsing code will do a "for each" on an array, and if we expect one item, but receive two, we might not have exercised the correct code to handle that second item in our consumer tests.
