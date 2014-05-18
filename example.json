@@ -1,0 +1,57 @@
+* Allow matching by class (any string == any string, any number == any number, nil == nil)
+* Allow exact matching by value
+* Allow matching strings by regular expression
+* Allow matching numbers by regular expression (is this likely to be needed?)
+
+
+{
+  "responseMatcher" : {
+    "body": {
+      "allowExtraKeys": true,
+      "match": "class",
+      "content": {
+        "phoneNumber": {
+          "regex" : "\\d{8}"
+        },
+        "children": {
+          "allowExtraItems": true,
+          "content": [
+            {
+              "content": {
+                "name" : {
+                  "match": "value"
+                }
+              }
+            }
+          ]
+        },
+        "favouriteColours": {
+          "allowExtraKeys": false,
+          "content": [ {
+            "match": "value"
+          }]
+        }
+      }
+    },
+  },
+  "response": {
+    "status": 200,
+    "_headersPactDirectives" : {
+      "allowExtraKeys": true,
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+        "name": "Fred",
+        "age": 9,
+        "balance": 34.05,
+        "phoneNumber": "12345678",
+        "children": [
+          {
+            "name": "Mary"
+          }],
+        "favouriteColours": ["red", "green", "blue"]
+      }
+  }
+}
