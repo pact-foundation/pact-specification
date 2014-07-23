@@ -18,7 +18,7 @@ Note: One implications of this philosophy is that you cannot verify, using pact,
 
 ##### Request method
 
-Exact string match, case sensitive (expects lower case). Open to the idea that this could be case insensitive.
+Exact string match, case insensitive.
 
 ##### Request path
 
