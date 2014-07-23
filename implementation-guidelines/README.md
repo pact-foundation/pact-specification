@@ -16,25 +16,34 @@ To create this diff:
 
 Ok, the above is actually a lie, but it will help you understand what actually happens.
 
-The json differ actually returns a Diff object, which is a nested object tree that is basically a copy of the expected tree, but at the paths in the tree where the values do not match, instead of the value, there is a Difference object that contains the expected and the actual. Eg.
+The json differ actually returns a Diff object, which is a nested object tree that is basically a copy of the expected tree, but at the paths in the tree where the values do not match, instead of the value, there is a Difference object that contains the expected and the actual values. Eg.
 
-Expected:
+Expected request body:
 
 ```json
 {
    "person" : {
-     "firstname" : "Fred"
+     "firstname" : "Fred",
+     "lastname" : "Smith",
+     "favouriteColours" : ["red"],
+     "children: ["John","Sue"],
+     "address" : {
+      "street" : "123 Some St"
+     }
    }
 }
 
 ```
 
-Actual:
+Actual request body:
 
 ```json
 {
    "person" : {
-     "firstname" : "Mary"
+     "firstname" : "Mary",
+     "numberOfLegs" : 2,
+     "favouriteColours" : ["red", "green"],
+     "children": ["John"]
    }
 }
 
@@ -42,13 +51,20 @@ Actual:
 
 Diff:
 
-```json
+```ruby
 {
-   "person" : {
-     "firstname" : Difference.new("Fred", "Mary")
+   "person" => {
+     "firstname" => Difference.new("Fred", "Mary"),
+     "lastname" => Difference.new("Smith", KeyNotFound),
+     "favouriteColours" => ["red", UnexpectedIndex],
+     "children" => ["John", IndexNotFound],
+     "numberOfLegs" => Difference.new(UnexpectedKey, 2),
+     "address" => Difference.new({"street" => "123 Some St"}, KeyNotFound)
    }
 }
 ```
+
+From this diff, the expected and actual object trees are recreated, and THEN they are turned into JSON, and a text diff is performed on those two strings. The reason it is done this way is that what is considered a match is NOT the same as what a straight text diff considers a match.
 
 
 # Consumer
