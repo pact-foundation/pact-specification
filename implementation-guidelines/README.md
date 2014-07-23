@@ -26,7 +26,7 @@ Expected request body:
      "firstname" : "Fred",
      "lastname" : "Smith",
      "favouriteColours" : ["red"],
-     "children: ["John","Sue"],
+     "children": ["John","Sue"],
      "address" : {
       "street" : "123 Some St"
      }
