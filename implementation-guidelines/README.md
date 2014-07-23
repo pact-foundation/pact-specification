@@ -74,6 +74,7 @@ TODO
 
 ### Setting up interactions
 * The mock service should allow more than one interaction to be expected at the same time, because a client class, or a UI may need to make multiple requests to execute one method.
+* More than one mock service should be able to run at a time so that the library can be used for scenarios where multiple backend servers are used (eg. a rich client UI).
 
 ### Handling requests
 * When a request comes in to the mock service, the request is compared with each interaction that has been registered with the mock service to find the right response to return.
