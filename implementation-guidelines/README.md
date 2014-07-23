@@ -1,3 +1,25 @@
+# Consumer and Provider
+
+* Remember to not assume at every stage that the request/response bodies are JSON - this will make implementing XML much easier down the track. The Ruby library uses differs and diff formatters that are configured based on the content type of the request/response.
+
+## Diff display
+
+The most user friendly format for displaying a JSON diff that I have found after a year of experimenting is [this](https://github.com/realestate-com-au/pact/blob/master/documentation/configuration.md#unix) one.
+
+To create this diff:
+1. Take the expected and actual object trees
+2. If this is a response body, remove any unexpected keys from the actual, as unexpected keys are allowed
+3. Order the keys the same in both expected and actual
+4. Convert both to JSON strings
+5. Perform a text diff using a third party diff library (prefereably one that uses colour!)
+
+Ok, the above is actually a lie, but it will help you understand what actually happens.
+
+The json differ actually returns a Diff object, which is a nested object tree that is basically a copy of the expected tree, but at the paths in the tree where the values do not match, instead of the value, there is a Difference object that contains the expected and the actual. Eg.
+
+```jon
+```
+
 # Consumer
 
 ## DSL
