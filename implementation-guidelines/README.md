@@ -70,6 +70,11 @@ To create the "unix" style diff string:
 
 TODO
 
+## Interaction uniqueness
+* Within a pact, the combination of description and provider state should be unique.
+* The interaction list in the pact file should be a set - if two identical interactions are defined, then only one should be included in the pact file.
+* If an interaction with the same description and provider state, but differing in some other way, is defined, then an error should be thrown indicating that the developer should change either the description or the provider state.
+
 ## Mock Service
 
 ### Setting up interactions
