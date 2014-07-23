@@ -12,6 +12,11 @@ To support consistency of matching logic, this specification has been developed 
 
 Note: One implications of this philosophy is that you cannot verify, using pact, that a key or a header will _not_ be present in a response. You can only verify what _is_.
 
+### Goals for implementing a pact library
+* The DSLs should be as similar as possible, within the idioms of the language, to the original Ruby wording to help create a consistent Pact experience, and minimise overhead when switching between languages.
+* The matching logic for the requests and responses should be the same so that we can have the same amount of confidence that the integrations will work in real life not matter what language the system was written and tested in.
+
+
 # Index
 
 * [Version 1](https://github.com/bethesque/pact_specification/tree/version-1) - A (WIP) spec that describes the existing matching in the ruby implementation, and provides test cases for implementations in other languages to ensure that matching is consistent.
