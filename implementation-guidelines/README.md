@@ -6,17 +6,9 @@
 
 The most user friendly format for displaying a JSON diff that I have found after a year of experimenting is [this](https://github.com/realestate-com-au/pact/blob/master/documentation/configuration.md#unix) one.
 
-To create this diff:
+To create this output, there are two classes involved - the Differ, which calculates the diff between expected and actual, and the DiffFormatter, which takes the diff and makes a nice human readable output of it.
 
-1. Take the expected and actual object trees  
-2. If this is a response body, remove any unexpected keys from the actual, as unexpected keys are allowed  
-3. Order the keys the same in both expected and actual  
-4. Convert both to JSON strings  
-5. Perform a text diff using a third party diff library (prefereably one that uses colour!)  
-
-Ok, the above is actually a lie, but it will help you understand what actually happens.
-
-The json differ actually returns a Diff object, which is a nested object tree that is basically a copy of the expected tree, but at the paths in the tree where the values do not match, instead of the value, there is a Difference object that contains the expected and the actual values. Eg.
+The "diff" is a nested object tree that is basically a copy of the expected tree, but at the paths in the tree where the values do not match, instead of the value, there is a Difference object that contains the expected and the actual values. Eg.
 
 Expected request body:
 
@@ -64,7 +56,12 @@ Diff:
 }
 ```
 
-From this diff, the expected and actual object trees are recreated, and THEN they are turned into JSON, and a text diff is performed on those two strings. The reason it is done this way is that what is considered a match is NOT the same as what a straight text diff considers a match.
+To create the "unix" style diff string:
+
+1. Recreate the "expected" by walking the diff and collecting the expected values from the Differences.
+2. Recreate the "actual" by walking the diff and collecting the actual values from the Differences.
+3. Convert both the "expected" and "actual" object trees to JSON.
+4. Perform a text diff between the two strings using a third party library.
 
 
 # Consumer
