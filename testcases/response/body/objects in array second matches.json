@@ -1,0 +1,19 @@
+{
+  "match": true,
+  "comment": "Array of objects, property of second object matches",
+  "expected" : {
+    "headers": {},
+    "body": [
+		{"favouriteColor": "red"}
+	]
+  },
+  "actual": {
+    "headers": {},
+    "body": [
+		{"favouriteColor": "blue",
+		"favouriteNumber": 4},
+		{"favouriteColor": "red",
+		"favouriteNumber": 2}
+	]
+  }
+}
