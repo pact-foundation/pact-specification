@@ -1,6 +1,6 @@
 {
-  "match": true,
-  "comment": "Array of objects, property of first object matches",
+  "match": false,
+  "comment": "Properties match but unexpected element recieved",
   "expected" : {
     "headers": {},
     "body": [
