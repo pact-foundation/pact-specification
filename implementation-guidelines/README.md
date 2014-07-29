@@ -97,6 +97,9 @@ TODO
 
 # Provider
 
+## Verification
+* Each interaction should be verified independently without any data leaking from a previous interaction.
+
 ## Interaction filters
 
 TODO
