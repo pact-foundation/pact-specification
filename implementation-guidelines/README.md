@@ -99,7 +99,8 @@ TODO
 
 ## Verification
 * Each interaction should be verified independently without any data leaking from a previous interaction.
-
+* To this end, a developer should be able to specify a "setup" hook and an "teardown" hook that will run before/after each interaction, as well as a setup/teardown hook for each provider state. 
+ 
 ## Interaction filters
 
 TODO
