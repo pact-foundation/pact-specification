@@ -70,40 +70,41 @@ To create the "unix" style diff string:
 
 TODO
 
-## Interaction uniqueness
-* Within a pact, the combination of description and provider state should be unique.
-* The interaction list in the pact file should be a set - if two identical interactions are defined, then only one should be included in the pact file.
-* If an interaction with the same description and provider state, but differing in some other way, is defined, then an error should be thrown indicating that the developer should change either the description or the provider state.
-* The reason this is important is 1. for the sake of meaningful documentation 2. it allows one interaction to be run at a time when verifying a pact by specifying the description and provider state of the interaction, and 3. the Ruby implementation has the option to merge interactions into an existing file when only one test is run (otherwise, all the other interactions get wiped) and there needs to be a unique key to work out which interaction needs to be updated.
+## 1. Interaction uniqueness
+1. Within a pact, the combination of description and provider state should be unique. The interaction list in the pact file should be a set - if two identical interactions are defined, then only one should be included in the pact file.
+
+2. If an interaction with the same description and provider state, but differing in some other way, is defined, then an error should be thrown indicating that the developer should change either the description or the provider state. The reason this is important is 1. for the sake of meaningful documentation 2. it allows one interaction to be run at a time when verifying a pact by specifying the description and provider state of the interaction, and 3. the Ruby implementation has the option to merge interactions into an existing file when only one test is run (otherwise, all the other interactions get wiped) and there needs to be a unique key to work out which interaction needs to be updated.
 
 ## Mock Service
 
 ### Setting up interactions
-* The mock service should allow more than one interaction to be expected at the same time, because a client class, or a UI may need to make multiple requests to execute one method.
-* More than one mock service should be able to run at a time so that the library can be used for scenarios where multiple backend servers are used (eg. a rich client UI).
+1. The mock service should allow more than one interaction to be expected at the same time, because a client class, or a UI may need to make multiple requests to execute one method.
+2. More than one mock service should be able to run at a time so that the library can be used for scenarios where multiple backend servers are used (eg. a rich client UI).
 
 ### Handling requests
-* When a request comes in to the mock service, the request is compared with each interaction that has been registered with the mock service to find the right response to return.
-* An interaction is considered a "candidate" for a match if the method and path match.
-* If no interaction matches the given request, then a 500 error should be returned by the mock service. The diffs for all candidate interactions should be logged and returned in the response body to assist with debugging.
-* If more than one interaction matches the given request, then a 500 error should be returned by the mock service, with a helpful error message. Each matching interaction should be logged and returned in the response body to assist with debugging.
-* If exactly one interaction matches the given request, than the corresponding response should be returned, and that interaction should be marked as received.
+1. When a request comes in to the mock service, the request is compared with each interaction that has been registered with the mock service to find the right response to return.
+1. An interaction is considered a "candidate" for a match if the method and path match.
+1. If no interaction matches the given request, then a 500 error should be returned by the mock service. The diffs for all candidate interactions should be logged and returned in the response body to assist with debugging.
+1. If more than one interaction matches the given request, then a 500 error should be returned by the mock service, with a helpful error message. Each matching interaction should be logged and returned in the response body to assist with debugging.
+1. If exactly one interaction matches the given request, than the corresponding response should be returned, and that interaction should be marked as received.
 
 ### Verifying after each test
-* After each test, a call should be made to the mock service to verify that all the expected interactions have occured, and that no unexpected interactions have occurred. If either of these is not true, then the test should fail with a helpful error message indicating which interactions were missing completely, which were "incorrect", and which were unexpected. An interaction is considered "Incorrect" if the request method and path match, but the headers, body or query did not match.
+1. After each test, a call should be made to the mock service to verify that all the expected interactions have occured, and that no unexpected interactions have occurred. If either of these is not true, then the test should fail with a helpful error message indicating which interactions were missing completely, which were "incorrect", and which were unexpected. An interaction is considered "Incorrect" if the request method and path match, but the headers, body or query did not match.
 
 ### Differentiating between an administrative request and an actual request
-* Each language may implement the calls to set up and verify the interactions in different ways, but as a suggestion, the ruby impl uses the HTTP header 'X-Pact-Mock-Service' to identify requests that are "administrative" (eg. setting up an expectation, verifying after a test) - all other requests will be treated as requests coming from the client under test.
+1. Each language may implement the calls to set up and verify the interactions in different ways, but as a suggestion, the ruby impl uses the HTTP header 'X-Pact-Mock-Service' to identify requests that are "administrative" (eg. setting up an expectation, verifying after a test) - all other requests will be treated as requests coming from the client under test.
 
 # Provider
 
 ## Verification
-* Each interaction should be verified independently without any data leaking from a previous interaction.
-* To this end, a developer should be able to specify a "setup" hook and an "teardown" hook that will run before/after each interaction, as well as a setup/teardown hook for each provider state. 
+1. Each interaction should be verified independently without any data leaking from a previous interaction.
+1. To this end, a developer should be able to specify a "setup" hook and an "teardown" hook that will run before/after each interaction, as well as a setup/teardown hook for each provider state. 
+1. Provider states should be able to be scoped by the consumer name. So, for example "a thing exists" 
  
 ## Interaction filters
 
-TODO
+1. The interactions to be verified by the verification task should be able to be filtered from the command line using the environment variables PACT_DESCRIPTION and PACT_PROVIDER_STATE. This will save your sanity when trying to develop the provider, as displaying 20 errors to the screen at once will be overwhelming and unhelpful. For example, `PACT_DESCRIPTION="a request for something" PACT_PROVIDER_STATE="something exists" rake pact:verify`
+1.  `PACT_PROVIDER_STATE=""` should match interactions where there is no provider state specified.
 
 ## Verifying arbitrary pacts
 
