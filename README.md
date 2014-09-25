@@ -19,6 +19,8 @@ Note: One implications of this philosophy is that you cannot verify, using pact,
 
 # Index
 
-* [Version 1](https://github.com/bethesque/pact_specification/tree/version-1) - A (WIP) spec that describes the existing matching in the ruby implementation, and provides test cases for implementations in other languages to ensure that matching is consistent.
+* [Version 1](https://github.com/bethesque/pact_specification/tree/version-1) - A spec that describes the existing matching in the ruby implementation, and provides test cases for implementations in other languages to ensure that matching is consistent.
 
-* [Version 2](https://github.com/bethesque/pact_specification/tree/version-2) - Also a WIP, this will introduce non-language specific regular expression and type matching.
+* [Version 1.1](https://github.com/bethesque/pact_specification/tree/version-1.1) - Updated specification shared between ruby, JVM and .Net versions.
+
+* [Version 2](https://github.com/bethesque/pact_specification/tree/version-2) - A WIP, this will introduce non-language specific regular expression and type matching.
