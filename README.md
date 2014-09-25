@@ -12,7 +12,7 @@ To support consistency of matching logic, this specification has been developed 
 
 Note: One implications of this philosophy is that you cannot verify, using pact, that a key or a header will _not_ be present in a response. You can only verify what _is_.
 
-### Version 1.0.0
+### Version 1.1.0
 
 #### Request matching
 
@@ -23,6 +23,11 @@ Exact string match, case insensitive.
 ##### Request path
 
 Exact string match, case sensitive, as paths are generally case sensitive. Trailing slashes should not be ignored, as they could potentially have significance.
+
+##### Request query string
+
+Query strings must have the same key-value pairs. Keys can be present in any order, but when the same key occurs multiple
+times, the values must be in the same order.
 
 ##### Request headers
 
