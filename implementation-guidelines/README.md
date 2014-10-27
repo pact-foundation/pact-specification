@@ -7,7 +7,7 @@
 Rather than implementing code the determine whether or not an actual request or response matches an expected request or response, write code that detects the differences between your expected and your actual. You can then use this diff to:
 
 1. Determine if an expected request/response matches an actual request/response by asserting that the diff between two objects is empty.
-2. Display any differences in a user friendly format.
+2. Display any differences in a user friendly format. The output of this diff will be displayed to the user when ever a Pact test fails, in both the consumer project and the provider verification, so it is important to do it well.
 
 ## Diff display
 
