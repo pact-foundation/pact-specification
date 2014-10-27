@@ -84,9 +84,13 @@ TODO
 ### Handling requests
 1. When a request comes in to the mock service, the request is compared with each interaction that has been registered with the mock service to find the right response to return.
 1. The rules for determining whether a request "matches" or not are defined by the pact-specification. It must "match" the path, query, headers and body according to the pact specification matching rules.
-1. If no interactions match the given request, then a 500 error should be returned by the mock service with an error indicating that no matches have been found. Include a list of the registered interactions and their diffs with the actual request to assist with debugging.
+1. If no interactions match the given request, then a 500 error should be returned by the mock service with an error indicating that no matches have been found. Include a list of the registered interactions to assist with debugging.
 1. If more than one interaction matches the given request, then a 500 error should be returned by the mock service, with a helpful error message. Each matching interaction should be logged and returned in the response body to assist with debugging.
 1. If exactly one interaction matches the given request, than the corresponding response should be returned, and that interaction should be marked as received.
+
+#### Improving usability of error responses from the mock service
+Once the logic described above is implemented, there are are some ways to make the error responses more user friendly.
+1. When no matching interaction is found, for each registered request that has a matching method and path, include the diff between it and the incoming request in the error response.
 
 ### Verifying after each test
 1. After each test, a call should be made to the mock service to verify that all the expected interactions have occured, and that no unexpected interactions have occurred. If either of these is not true, then the test should fail with a helpful error message indicating which expected interactions were not recieved, which unexpected request were recieved.
