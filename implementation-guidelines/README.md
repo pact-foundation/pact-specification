@@ -88,12 +88,13 @@ TODO
 1. If more than one interaction matches the given request, then a 500 error should be returned by the mock service, with a helpful error message. Each matching interaction should be logged and returned in the response body to assist with debugging.
 1. If exactly one interaction matches the given request, than the corresponding response should be returned, and that interaction should be marked as received.
 
-#### Improving usability of error responses from the mock service
-Once the logic described above is implemented, there are are some ways to make the error responses more user friendly.
-1. When no matching interaction is found, for each registered request that has a matching method and path, include the diff between it and the incoming request in the error response.
-
 ### Verifying after each test
 1. After each test, a call should be made to the mock service to verify that all the expected interactions have occured, and that no unexpected interactions have occurred. If either of these is not true, then the test should fail with a helpful error message indicating which expected interactions were not recieved, which unexpected request were recieved.
+
+### Improving usability of error responses from the mock service
+Once the logic described above is implemented, there are are some ways to make the error responses more user friendly.
+1. When no matching interaction is found, for each registered request that has a matching method and path, include the diff between it and the incoming request in the error response.
+2. In the verify response, for each incoming request that didn't have a matching expectation, include a diff for each interaction with a matching method and path.
 
 ### Differentiating between an administrative request and an actual request
 1. Each language may implement the calls to set up and verify the interactions in different ways, but as a suggestion, the ruby impl uses the HTTP header 'X-Pact-Mock-Service' to identify requests that are "administrative" (eg. setting up an expectation, verifying after a test) - all other requests will be treated as requests coming from the client under test.
