@@ -5,6 +5,7 @@
 ## Implement "diff", not "match?"
 
 Rather than implementing code the determine whether or not an actual request or response matches an expected request or response, write code that detects the differences between your expected and your actual. You can then use this diff to:
+
 1. Determine if an expected request/response matches an actual request/response by asserting that the diff between two objects is empty.
 2. Display any differences in a user friendly format.
 
