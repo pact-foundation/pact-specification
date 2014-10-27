@@ -89,7 +89,7 @@ TODO
 1. If exactly one interaction matches the given request, than the corresponding response should be returned, and that interaction should be marked as received.
 
 ### Verifying after each test
-1. After each test, a call should be made to the mock service to verify that all the expected interactions have occured, and that no unexpected interactions have occurred. If either of these is not true, then the test should fail with a helpful error message indicating which interactions were missing completely, which were "incorrect", and which were unexpected. An interaction is considered "Incorrect" if the request method and path match, but the headers, body or query did not match.
+1. After each test, a call should be made to the mock service to verify that all the expected interactions have occured, and that no unexpected interactions have occurred. If either of these is not true, then the test should fail with a helpful error message indicating which expected interactions were not recieved, which unexpected request were recieved.
 
 ### Differentiating between an administrative request and an actual request
 1. Each language may implement the calls to set up and verify the interactions in different ways, but as a suggestion, the ruby impl uses the HTTP header 'X-Pact-Mock-Service' to identify requests that are "administrative" (eg. setting up an expectation, verifying after a test) - all other requests will be treated as requests coming from the client under test.
