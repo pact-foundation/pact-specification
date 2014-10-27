@@ -83,10 +83,9 @@ TODO
 
 ### Handling requests
 1. When a request comes in to the mock service, the request is compared with each interaction that has been registered with the mock service to find the right response to return.
-1. An interaction is considered a "candidate" for a match if the method and path match. There may be multiple candidate interactions found for a request.
-1. From the candidate interactions, a fully matching interaction must be found for the incoming request.
-1. If no candiate interactions match the given request, then a 500 error should be returned by the mock service. The diffs for all candidate interactions should be logged and returned in the response body to assist with debugging.
-1. If more than one candidate interaction matches the given request, then a 500 error should be returned by the mock service, with a helpful error message. Each candiate interaction should be logged and returned in the response body to assist with debugging.
+1. The rules for determining whether a request "matches" or not are defined by the pact-specification. It must "match" the path, query, headers and body according to the pact specification matching rules.
+1. If no interactions match the given request, then a 500 error should be returned by the mock service with an error indicating that no matches have been found. Include a list of the registered interactions and their diffs with the actual request to assist with debugging.
+1. If more than one interaction matches the given request, then a 500 error should be returned by the mock service, with a helpful error message. Each matching interaction should be logged and returned in the response body to assist with debugging.
 1. If exactly one interaction matches the given request, than the corresponding response should be returned, and that interaction should be marked as received.
 
 ### Verifying after each test
