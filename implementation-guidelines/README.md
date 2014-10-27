@@ -2,6 +2,12 @@
 
 * Remember to not assume at every stage that the request/response bodies are JSON - this will make implementing XML much easier down the track. The Ruby library uses differs and diff formatters that are configured based on the content type of the request/response.
 
+## Implement "diff", not "match?"
+
+Rather than implementing code the determine whether or not an actual request or response matches an expected request or response, write code that detects the differences between your expected and your actual. You can then use this diff to:
+1. Determine if an expected request/response matches an actual request/response by asserting that the diff between two objects is empty.
+2. Display any differences in a user friendly format.
+
 ## Diff display
 
 The most user friendly format for displaying a JSON diff that I have found after a year of experimenting is [this](https://github.com/realestate-com-au/pact/blob/master/documentation/configuration.md#unix) one.
@@ -71,7 +77,7 @@ To create the "unix" style diff string:
 TODO
 
 ## 1. Interaction uniqueness
-1. Within a pact, the combination of description and provider state should be unique. The interaction list in the pact file should be a set - if two identical interactions are defined, then only one should be included in the pact file.
+1. Within a pact, the combination of description and provider state should be unique. The interaction list in the pact file should be a Set - if two identical interactions are defined, then only one should be included in the pact file.
 
 2. If an interaction with the same description and provider state, but differing in some other way, is defined, then an error should be thrown indicating that the developer should change either the description or the provider state. The reason this is important is 1. for the sake of meaningful documentation 2. it allows one interaction to be run at a time when verifying a pact by specifying the description and provider state of the interaction, and 3. the Ruby implementation has the option to merge interactions into an existing file when only one test is run (otherwise, all the other interactions get wiped) and there needs to be a unique key to work out which interaction needs to be updated.
 
