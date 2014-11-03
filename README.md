@@ -6,6 +6,8 @@ To support consistency of matching logic, this specification has been developed 
 
 ### Pact Specificaton Philosophy
 
+The Pact matching rules follow [Postel's Law][postel].
+
 * Be as strict as we reasonably can with what we send out (requests). We should know and be able to control exactly what a consumer is sending out. Information should not be allowed to "leak" silently.
 * Be as loose as we reasonably can with what we accept (responses). A provider should be able to send extra information that this particular consumer does not care about, without breaking this consumer.
 * When writing the matching rules, err on the side of being more strict now, because it will break fewer things to be looser later, than to get stricter later.
@@ -24,3 +26,6 @@ Note: One implications of this philosophy is that you cannot verify, using pact,
 * [Version 1.1](https://github.com/bethesque/pact_specification/tree/version-1.1) - Updated specification shared between ruby, JVM and .Net versions.
 
 * [Version 2](https://github.com/bethesque/pact_specification/tree/version-2) - A WIP, this will introduce non-language specific regular expression and type matching.
+
+
+[postel]: http://en.wikipedia.org/wiki/Jon_Postel#Postel.27s_Law
