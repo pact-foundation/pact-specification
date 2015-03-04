@@ -5,7 +5,7 @@
 ## Implement "diff", not "match?"
 
 Rather than implementing code the determine whether or not an actual request or response matches an expected request or response, write code that detects the differences between your expected and your actual. You can then use this diff to:
-
+Provider states should be able to be scoped by the consumer name
 1. Determine if an expected request/response matches an actual request/response by asserting that the diff between two objects is empty.
 2. Display any differences in a user friendly format. The output of this diff will be displayed to the user when ever a Pact test fails, in both the consumer project and the provider verification, so it is important to do it well.
 
@@ -111,7 +111,7 @@ Once the logic described above is implemented, there are are some ways to make t
 ## Verification
 1. Each interaction should be verified independently without any data leaking from a previous interaction.
 1. To this end, a developer should be able to specify a "setup" hook and an "teardown" hook that will run before/after each interaction, as well as a setup/teardown hook for each provider state. 
-1. Provider states should be able to be scoped by the consumer name. So, for example "a thing exists" 
+1. Provider states should be able to be scoped by the consumer name. So, for example "a thing exists" for Consumer A should be a different setup hook to "a thing exists" for Consumer B.
  
 ## Interaction filters
 
