@@ -2,8 +2,6 @@
   "match": true,
   "comment": "Response match with same type",
   "expected" : {
-    "method": "POST",
-    "path": "/",
     "headers": {},
     "responseMatchingRules": {
       "$.body.alligator.name": {"match": "type"},
@@ -18,8 +16,6 @@
     }
   },
   "actual": {
-    "method": "POST",
-    "path": "/",
     "headers": {},
     "body": {
       "alligator":{

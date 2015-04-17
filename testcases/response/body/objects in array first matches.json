@@ -2,8 +2,6 @@
   "match": false,
   "comment": "Properties match but unexpected element received",
   "expected": {
-    "method": "POST",
-    "path": "/",
     "headers": {},
     "body": [
       {
@@ -12,8 +10,6 @@
     ]
   },
   "actual": {
-    "method": "POST",
-    "path": "/",
     "headers": {},
     "body": [
       {

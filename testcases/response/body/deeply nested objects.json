@@ -2,12 +2,10 @@
 	"match": true,
 	"comment": "Comparisons should work even on nested objects",
 	"expected" : {
-		"method": "PUT",
-		"path": "/",
 		"headers": {},
 		"body": {
 			"object1": {
-				"object2": {
+				"object2": { 
 					"object4": {
 						"object5": {
 							"name": "Mary",
@@ -22,12 +20,10 @@
 		}
 	},
 	"actual": {
-		"method": "PUT",
-		"path": "/",
 		"headers": {},
 		"body": {
 			"object1":{
-				"object2": {
+				"object2": { 
 					"object4":{
 						"object5": {
 							"name": "Mary",

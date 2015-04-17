@@ -2,13 +2,9 @@
   "match": true,
   "comment": "Missing body",
   "expected" : {
-    "method": "POST",
-    "path": "/",
     "headers": {"Content-Type": "application/json"}
   },
   "actual": {
-    "method": "POST",
-    "path": "/",
     "headers": {"Content-Type": "application/json"},
     "body": {
       "alligator":{

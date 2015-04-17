@@ -2,8 +2,6 @@
   "match": true,
   "comment": "Requests match with regex",
   "expected" : {
-    "method": "PUT",
-    "path": "/",
     "headers": {},
     "responseMatchingRules": {
       "$.body.alligator.name": {"regex": "\\w+"}
@@ -17,8 +15,6 @@
     }
   },
   "actual": {
-    "method": "PUT",
-    "path": "/",
     "headers": {},
     "body": {
       "alligator":{

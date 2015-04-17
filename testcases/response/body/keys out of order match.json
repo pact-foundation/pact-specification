@@ -2,8 +2,6 @@
   "match": true,
   "comment": "Favourite number and favourite colours out of order",
   "expected" : {
-    "method": "PUT",
-    "path": "/",
     "headers": {},
     "body": {
 		"favouriteNumber": 7,
@@ -11,8 +9,6 @@
     }
   },
   "actual": {
-    "method": "PUT",
-    "path": "/",
     "headers": {},
     "body": {
         "favouriteColours": ["red","blue"],

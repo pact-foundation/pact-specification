@@ -3,8 +3,6 @@
   "comment": "Favourite colours in wrong order",
   "expected" : {
     "headers": {},
-    "method": "post",
-    "path": "/",
     "body": {
       "alligator":{
         "favouriteColours": ["red","blue"]
@@ -13,8 +11,6 @@
   },
   "actual": {
     "headers": {},
-    "method": "post",
-    "path": "/",
     "body": {
       "alligator":{
         "favouriteColours": ["blue", "red"]
