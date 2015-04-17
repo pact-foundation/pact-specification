@@ -2,6 +2,8 @@
   "match": false,
   "comment": "Name should not be null",
   "expected" : {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": {
       "alligator":{
@@ -10,6 +12,8 @@
     }
   },
   "actual": {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": {
       "alligator":{

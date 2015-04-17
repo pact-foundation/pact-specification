@@ -2,12 +2,16 @@
   "match": true,
   "comment": "Headers match",
   "expected" : {
+    "method": "POST",
+    "path": "/",
     "headers": {
       "Accept": "alligators",
       "Content-Type": "hippos"
     }
   },
   "actual": {
+    "method": "POST",
+    "path": "/",
     "headers": {
       "Content-Type": "hippos",
       "Accept": "alligators"

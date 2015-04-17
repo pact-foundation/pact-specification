@@ -2,9 +2,13 @@
   "match": true,
   "comment": "Extra headers allowed",
   "expected" : {
+    "method": "POST",
+    "path": "/",
     "headers": {}
   },
   "actual": {
+    "method": "POST",
+    "path": "/",
     "headers": {
       "Accept": "alligators"
     }

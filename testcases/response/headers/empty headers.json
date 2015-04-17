@@ -2,10 +2,14 @@
   "match": true,
   "comment": "Empty headers match",
   "expected" : {
+    "method": "POST",
+    "path": "/",
     "headers": {}
 
   },
   "actual": {
+    "method": "POST",
+    "path": "/",
     "headers": {}
   }
 }

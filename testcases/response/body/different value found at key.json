@@ -2,6 +2,8 @@
   "match": false,
   "comment": "Incorrect value at alligator name",
   "expected" : {
+    "method": "PUT",
+    "path": "/",
     "headers": {},
     "body": {
       "alligator":{
@@ -10,6 +12,8 @@
     }
   },
   "actual": {
+    "method": "PUT",
+    "path": "/",
     "headers": {},
     "body": {
       "alligator":{

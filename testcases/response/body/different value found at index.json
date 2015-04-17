@@ -2,6 +2,8 @@
   "match": false,
   "comment": "Incorrect favourite colour",
   "expected" : {
+    "method": "PUT",
+    "path": "/",
     "headers": {},
     "body": {
       "alligator":{
@@ -11,6 +13,8 @@
   },
   "actual": {
     "headers": {},
+    "method": "PUT",
+    "path": "/",
     "body": {
       "alligator":{
         "favouriteColours": ["red","taupe"]

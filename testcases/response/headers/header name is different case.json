@@ -2,11 +2,15 @@
   "match": true,
   "comment": "Header name is case insensitive",
   "expected" : {
+    "method": "POST",
+    "path": "/",
     "headers": {
       "Accept": "alligators"
     }
   },
   "actual": {
+    "method": "POST",
+    "path": "/",
     "headers": {
       "ACCEPT": "alligators"
     }

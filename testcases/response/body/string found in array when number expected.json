@@ -2,6 +2,8 @@
   "match": false,
   "comment": "Favourite Numbers expected to be numbers, but 2 is a string",
   "expected" : {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": {
       "alligator":{
@@ -10,6 +12,8 @@
     }
   },
   "actual": {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": {
       "alligator":{

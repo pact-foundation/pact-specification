@@ -1,19 +1,29 @@
 {
   "match": false,
   "comment": "Property of second object matches, but unexpected element recieved",
-  "expected" : {
+  "expected": {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": [
-		{"favouriteColor": "red"}
-	]
+      {
+        "favouriteColor": "red"
+      }
+    ]
   },
   "actual": {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": [
-		{"favouriteColor": "blue",
-		"favouriteNumber": 4},
-		{"favouriteColor": "red",
-		"favouriteNumber": 2}
-	]
+      {
+        "favouriteColor": "blue",
+        "favouriteNumber": 4
+      },
+      {
+        "favouriteColor": "red",
+        "favouriteNumber": 2
+      }
+    ]
   }
 }

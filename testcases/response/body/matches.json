@@ -2,6 +2,8 @@
   "match": true,
   "comment": "Responses match",
   "expected" : {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": {
       "alligator":{
@@ -12,6 +14,8 @@
     }
   },
   "actual": {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": {
       "alligator":{

@@ -2,6 +2,8 @@
   "match": false,
   "comment": "Array of objects, properties match on incorrect objects",
   "expected" : {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": [
 		{"favouriteColor": "red"},
@@ -9,6 +11,8 @@
 	]
   },
   "actual": {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": [
 		{"favouriteColor": "blue",

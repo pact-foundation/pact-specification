@@ -2,6 +2,8 @@
   "match": false,
   "comment": "Number of feet expected to be number but was string",
   "expected" : {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": {
       "alligator":{
@@ -10,6 +12,8 @@
     }
   },
   "actual": {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": {
       "alligator":{

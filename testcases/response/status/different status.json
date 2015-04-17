@@ -2,9 +2,13 @@
   "match": false,
   "comment": "Status is incorrect",
   "expected": {
+    "method": "POST",
+    "path": "/",
     "status": 202
   },
   "actual": {
+    "method": "POST",
+    "path": "/",
     "status": 400
   }
 }

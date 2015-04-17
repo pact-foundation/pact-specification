@@ -2,6 +2,8 @@
   "match": false,
   "comment": "Property names on objects are case sensitive",
   "expected" : {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": {
       "alligator":{
@@ -10,6 +12,8 @@
     }
   },
   "actual": {
+    "method": "POST",
+    "path": "/",
     "headers": {},
     "body": {
       "alligator":{

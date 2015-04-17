@@ -2,8 +2,12 @@
   "match": true,
   "comment": "No body, no content-type",
   "expected" : {
+    "method": "POST",
+    "path": "/"
   },
   "actual": {
+    "method": "POST",
+    "path": "/",
     "headers": {"Content-Type": "application/json"},
     "body": {
       "alligator":{
