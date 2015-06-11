@@ -8,8 +8,8 @@
 				"object2": { 
 					"object4": {
 						"object5": {
-							name: "Mary",
-							friends: ["Fred", "John"]
+							"name": "Mary",
+							"friends": ["Fred", "John"]
 						},
 						"object6": {
 							"phoneNumber": 1234567890
@@ -26,8 +26,8 @@
 				"object2": { 
 					"object4":{
 						"object5": {
-							name: "Mary",
-							friends: ["Fred", "John"],
+							"name": "Mary",
+							"friends": ["Fred", "John"],
 							"gender": "F"
 						},
 						"object6": {
