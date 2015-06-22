@@ -5,14 +5,14 @@
     "method": "POST",
     "path": "/",
     "query": "",
-    "headers": {},
+    "headers": { "Content-Type": "text/plain" },
     "body": "alligator named mary"
   },
   "actual": {
     "method": "POST",
     "path": "/",
     "query": "",
-    "headers": {},
+    "headers": { "Content-Type": "text/plain" },
     "body": "alligator named fred"
   }
 }

@@ -2,11 +2,11 @@
   "match": false,
   "comment": "Plain text that does not match",
   "expected" : {
-    "headers": {},
+    "headers": { "Content-Type": "text/plain" },
     "body": "alligator named mary"
   },
   "actual": {
-    "headers": {},
+    "headers": { "Content-Type": "text/plain" },
     "body": "alligator named fred"
   }
 }
