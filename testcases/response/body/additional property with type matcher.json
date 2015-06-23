@@ -1,6 +1,6 @@
 {
   "match": true,
-  "comment": "array with regex matcher",
+  "comment": "additional property with type matcher wildcards",
   "expected": {
     "headers": {},
     "body" : {
