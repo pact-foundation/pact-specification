@@ -4,9 +4,9 @@
   "expected": {
     "headers": {},
     "body" : {
-      myPerson: {
-        name: "Any name",
-        age: 10
+      "myPerson": {
+        "name": "Any name",
+        "age": 10
       }
     },
     "matchingRules" : {
@@ -18,10 +18,10 @@
   "actual": {
     "headers": {},
     "body": {
-      myPerson: {
-        name: "Jon Peterson",
-        age: 39,
-        nationality: "Australian"
+      "myPerson": {
+        "name": "Jon Peterson",
+        "age": 39,
+        "nationality": "Australian"
       }
     }    
   }

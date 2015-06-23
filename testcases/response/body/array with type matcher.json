@@ -4,7 +4,7 @@
   "expected": {
     "headers": {},
     "body" : {
-      myDates: [
+      "myDates": [
         10
       ]
     },
@@ -17,7 +17,7 @@
   "actual": {
     "headers": {},
     "body": {
-      myDates: [
+      "myDates": [
         20,
         5,
         1910
