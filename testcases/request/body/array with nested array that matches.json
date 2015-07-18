@@ -7,7 +7,7 @@
     "query": "",
     "headers": {"Content-Type": "application/json"},
     "matchingRules": {
-      "$.body.animals": {"min": 1, "match" "type"},
+      "$.body.animals": {"min": 1, "match": "type"},
       "$.body.animals[*].*": {"match": "type"},
       "$.body.animals[*].children": {"min": 1, "match": "type"},
       "$.body.animals[*].children[*].*": {"match": "type"}
