@@ -12,9 +12,9 @@ To support consistency of matching logic, this specification has been developed 
 
 Note: One implications of this philosophy is that you cannot verify, using pact, that a key or a header will _not_ be present in a response. You can only verify what _is_.
 
-### Version 2.0.0
+### Version 2.0
 
-See this [gist](https://gist.github.com/bethesque/5a35a3c1cb9fdab6dce7) for an idea of where version 2.0.0 is heading.
+See this [gist](https://gist.github.com/bethesque/5a35a3c1cb9fdab6dce7) for an idea of where version 2.0 is came from.
 
 #### Request matching
 
