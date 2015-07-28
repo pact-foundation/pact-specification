@@ -12,45 +12,25 @@ To support consistency of matching logic, this specification has been developed 
 
 Note: One implications of this philosophy is that you cannot verify, using pact, that a key or a header will _not_ be present in a response. You can only verify what _is_.
 
-### Version 2.0
+### Version 3.0 (WIP)
 
-See this [gist](https://gist.github.com/bethesque/5a35a3c1cb9fdab6dce7) for an idea of where version 2.0 is came from.
+Version 3.0 introduces the following changes from 2.0:
 
-#### Request matching
+#### Introduces messages for services that communicate via event streams and message queues
 
-##### Request method
+#### Query strings are stored as Map instead of strings
 
-Exact string match, case insensitive.
+#### Allow multiple provider states with parameters
 
-##### Request path
+#### Allow arrays of matchers to be defined against a matcher path
 
-Exact string match, case sensitive, as paths are generally case sensitive. Trailing slashes should not be ignored, as they could potentially have significance.
+#### Allow schemas to be defined
 
-##### Request query string
+#### Matching times and dates in a cross-platform manner
 
-Query strings must have the same key-value pairs. Keys can be present in any order, but when the same key occurs multiple
-times, the values must be in the same order.
+### References
 
-##### Request headers
-
-Exact string match for expected header names and values. Allow unexpected headers to be sent out, as frameworks and network utilities are likely to set their own headers (eg. User-Agent), and it would increase the maintenance burden to have to track all of those.
-
-##### Request body
-
-* Do not allow unexpected keys to be sent in the body. See "Pact Specificaton Philosophy" in main README.
-* Do not allow unexpected items in an array. Most parsing code will do a "for each" on an array, and if we expect one item, but two go out, we have "leaked" information.
-
-#### Response matching
-
-##### Response status
-
-Exact integer match.
-
-##### Response headers
-
-Exact string match for expected header names and values. Allow unexpected headers to be sent back, as in reality, as extra headers will be added by network utilities and server frameworks.
-
-##### Response body
-
-* Allow unexpected keys to be sent back in the body. See "Pact Specification Philosophy" in main README.
-* Do not allow unexpected items in an array. Most parsing code will do a "for each" on an array, and if we expect one item, but receive two, we might not have exercised the correct code to handle that second item in our consumer tests.
+* https://groups.google.com/forum/#!topic/pact-dev/T3TYHJWWw2c
+* https://github.com/DiUS/pact-jvm/issues/97
+* https://groups.google.com/forum/#!topic/pact-support/d0nXzVi1Nf0
+* https://groups.google.com/forum/#!topic/pact-support/YHw7hgD1d4g
