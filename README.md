@@ -25,7 +25,8 @@ Note: One implications of this philosophy is that you cannot verify, using pact,
 
 * [Version 1.1](https://github.com/bethesque/pact_specification/tree/version-1.1) - Updated specification shared between ruby, JVM and .Net versions.
 
-* [Version 2](https://github.com/bethesque/pact_specification/tree/version-2) - A WIP, this will introduce non-language specific regular expression and type matching.
+* [Version 2](https://github.com/bethesque/pact_specification/tree/version-2) - Introduces non-language specific regular expression and type matching.
 
+* [Version 3](https://github.com/bethesque/pact_specification/tree/version-3) - WIP - Introduces pact format for message queues and corrects some issues with V2.
 
 [postel]: http://en.wikipedia.org/wiki/Jon_Postel#Postel.27s_Law
