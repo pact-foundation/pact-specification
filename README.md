@@ -142,8 +142,8 @@ This will allow expressions like `HEADERY: ValueA, ValueB` with
 #### Allow schemas to be defined request, response and message content
 
 This would add a schema element to each body/content. The schema would be used to validate the request bodies in the
-consumer tests and the response bodies in the provider bodies. JSONSchema could be used for JSON bodies, and XSD or
-something like schematron for XML.
+consumer tests and the response bodies in the provider bodies. JSONSchema could be used for JSON bodies, and for XML XSD or
+something like schematron.
 
 #### Matching times and dates in a cross-platform manner
 
@@ -154,9 +154,10 @@ e.g:
 
 | Platform | Expression | Result |
 | -------- | ---------- | ------ |
-| JVM | new Date().parse('dd-MM-yyyy', '29-02-2001') | Thu Mar 01 00:00:00 AEDT 2001 |
+| JVM | ```java new Date().parse("dd-MM-yyyy", "29-02-2001")``` | Thu Mar 01 00:00:00 AEDT 2001 |
 | JVM Jodatime | DateTime dateTime  = DateTime.parse("29-02-2001", DateTimeFormat.forPattern("dd-MM-yyyy")) | org.joda.time.IllegalFieldValueException: Cannot parse "29-02-2001": Value 29 for dayOfMonth must be in the range [1,28] |
 | Javascript | new Date(Date.parse('Feb 29, 2001')).toString() | Thu Mar 01 2001 00:00:00 GMT+1100 (AEDT) |
+| Ruby | Date.strptime('29-02-2001', '%d-%m-%Y') | invalid date (ArgumentError) |
 
 
 ### References
