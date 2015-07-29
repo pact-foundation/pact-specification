@@ -154,10 +154,10 @@ e.g:
 
 | Platform | Expression | Result |
 | -------- | ---------- | ------ |
-| JVM | ```java new Date().parse("dd-MM-yyyy", "29-02-2001")``` | Thu Mar 01 00:00:00 AEDT 2001 |
-| JVM Jodatime | DateTime dateTime  = DateTime.parse("29-02-2001", DateTimeFormat.forPattern("dd-MM-yyyy")) | org.joda.time.IllegalFieldValueException: Cannot parse "29-02-2001": Value 29 for dayOfMonth must be in the range [1,28] |
-| Javascript | new Date(Date.parse('Feb 29, 2001')).toString() | Thu Mar 01 2001 00:00:00 GMT+1100 (AEDT) |
-| Ruby | Date.strptime('29-02-2001', '%d-%m-%Y') | invalid date (ArgumentError) |
+| JVM | `new Date().parse("dd-MM-yyyy", "29-02-2001")` | Thu Mar 01 00:00:00 AEDT 2001 |
+| JVM Jodatime | `DateTime dateTime  = DateTime.parse("29-02-2001", DateTimeFormat.forPattern("dd-MM-yyyy"))` | org.joda.time.IllegalFieldValueException: Cannot parse "29-02-2001": Value 29 for dayOfMonth must be in the range [1,28] |
+| Javascript | `new Date(Date.parse('Feb 29, 2001')).toString()` | Thu Mar 01 2001 00:00:00 GMT+1100 (AEDT) |
+| Ruby | `Date.strptime('29-02-2001', '%d-%m-%Y')` | invalid date (ArgumentError) |
 
 
 ### References
