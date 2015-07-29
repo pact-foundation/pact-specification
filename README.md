@@ -18,15 +18,146 @@ Version 3.0 introduces the following changes from 2.0:
 
 #### Introduces messages for services that communicate via event streams and message queues
 
+This proposal is to introduce a non-request/response interaction to support message queues where the flow may be one way. Pact file format will be expanded to be able
+to include something like
+
+```json
+{
+    "consumer": {
+        "name": "Consumer"
+    },
+    "provider": {
+        "name": "Provider"
+    },
+    "messages": [
+        {
+            "description": "Published credit data",
+            "providerState": "or maybe 'scenario'? not sure about this",
+            "contents": {
+                "foo": "bar"
+            },
+            "metaData": {
+              "contentType": "application/json"
+            }
+        }
+    ]
+}
+```
+
+As some message formats are binary, it may be necessary to Base64 encode the message contents.
+
 #### Query strings are stored as Map instead of strings
+
+Currently the query strings are stored as a single string, e.g.:
+
+```json
+"request": {
+  "method": "get",
+  "path": "/autoComplete/address",
+  "query": "max_results=100&state=NSW&term=80+CLARENCE+ST,+SYDNEY+NSW+2000",
+}
+```
+
+This proposal is to store them in un-encoded map of keys to list of values format:
+
+```json
+"request": {
+  "method": "get",
+  "path": "/autoComplete/address",
+  "query": {
+    "max_results": ["100"],
+    "state": ["NSW"],
+    "term": ["80 CLARENCE ST, SYDNEY NSW 2000"]
+  }
+}
+```
 
 #### Allow multiple provider states with parameters
 
+Currently, provider states are defined as a descriptive string. There is no way to infer the data required for the state
+without encoding the values into the description.
+
+```json
+{
+  "providerState": "an alligator with the given name Mary exists and the user Fred is logged in"
+}
+```
+
+The change would be:
+
+```json
+{
+  "providerStates": [
+    {
+      "name": "an alligator with the given name exists",
+      "params": {"name" : "Mary"}
+    }, {
+      "name": "the user is logged in",
+      "params" : { "username" : "Fred"}
+    }
+  ]
+}
+```
+
 #### Allow arrays of matchers to be defined against a matcher path
 
-#### Allow schemas to be defined
+The current matchers only allow one matcher to be defined for a value. There is no way to combine matchers to do something
+like value must match A and must match B.
+
+Proposal is  to change
+
+```json
+{
+  "matchingRules": {
+    "path": {"match": "A"}
+  }
+}
+```
+
+to
+
+```json
+{
+  "matchingRules": {
+    "path": [
+      {"match": "A"}
+    ]
+  }
+}
+```
+
+This will allow expressions like `HEADERY: ValueA, ValueB` with
+
+```json
+{
+  "matchingRules": {
+    "$.header.HEADERY": [
+      {"match": "include", "value": "ValueA"},
+      {"match": "include", "value": "ValueB"}
+    ]
+  }
+}
+```
+
+#### Allow schemas to be defined request, response and message content
+
+This would add a schema element to each body/content. The schema would be used to validate the request bodies in the
+consumer tests and the response bodies in the provider bodies. JSONSchema could be used for JSON bodies, and XSD or
+something like schematron for XML.
 
 #### Matching times and dates in a cross-platform manner
+
+Regular expression matching only allows syntactic evaluation of times and dates. It is quite hard to define expressions
+that could determine that dates like '29-02-2001' are invalid. Dates also have different defaulting behavior on different platforms.
+
+e.g:
+
+| Platform | Expression | Result |
+| -------- | ---------- | ------ |
+| JVM | new Date().parse('dd-MM-yyyy', '29-02-2001') | Thu Mar 01 00:00:00 AEDT 2001 |
+| JVM Jodatime | DateTime dateTime  = DateTime.parse("29-02-2001", DateTimeFormat.forPattern("dd-MM-yyyy")) | org.joda.time.IllegalFieldValueException: Cannot parse "29-02-2001": Value 29 for dayOfMonth must be in the range [1,28] |
+| Javascript | new Date(Date.parse('Feb 29, 2001')).toString() | Thu Mar 01 2001 00:00:00 GMT+1100 (AEDT) |
+
 
 ### References
 
