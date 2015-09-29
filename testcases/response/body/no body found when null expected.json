@@ -1,0 +1,9 @@
+{
+  "match": true,
+  "comment": "No body found, when a null body was expected",
+  "expected" : {
+    "body": null
+  },
+  "actual": {
+  }
+}

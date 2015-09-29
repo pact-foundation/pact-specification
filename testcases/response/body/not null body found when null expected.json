@@ -1,0 +1,18 @@
+{
+  "match": false,
+  "comment": "Not null body found, when a null body was expected",
+  "expected" : {
+    "headers": {"Content-Type": "application/json"},
+    "body": null
+  },
+  "actual": {
+    "headers": {"Content-Type": "application/json"},
+    "body": {
+      "alligator":{
+        "feet": 4,
+        "name": "Mary",
+        "favouriteColours": ["red","blue"]
+      }
+    }
+  }
+}

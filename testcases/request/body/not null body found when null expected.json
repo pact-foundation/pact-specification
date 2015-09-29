@@ -1,0 +1,22 @@
+{
+  "match": false,
+  "comment": "Not null body found, when a null body was expected",
+  "expected" : {
+    "method": "POST",
+    "path": "/",
+    "query": "",
+    "headers": {"Content-Type": "application/json"},
+    "body": null
+  },
+  "actual": {
+    "method": "POST",
+    "path": "/",
+    "query": "",
+    "headers": {"Content-Type": "application/json"},
+    "body": {
+      "alligator": {
+        "age": 3
+      }
+    }
+  }
+}
