@@ -1,6 +1,6 @@
 {
   "match": true,
-  "comment": "No body, no content-type",
+  "comment": "Missing body, no content-type",
   "expected" : {
   },
   "actual": {

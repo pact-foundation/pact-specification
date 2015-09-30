@@ -1,15 +1,18 @@
 {
   "match": true,
-  "comment": "No body found, when a null body was expected",
+  "comment": "Empty body",
   "expected" : {
     "method": "POST",
     "path": "/",
     "query": "",
+    "headers": {"Content-Type": "application/json"},
     "body": null
   },
   "actual": {
     "method": "POST",
     "path": "/",
-    "query": ""
+    "query": "",
+    "headers": {"Content-Type": "application/json"},
+    "body": null
   }
 }

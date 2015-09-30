@@ -1,12 +1,10 @@
 {
-  "match": false,
-  "comment": "Not null body found, when a null body was expected",
+  "match": true,
+  "comment": "Missing body, no content-type",
   "expected" : {
     "method": "POST",
     "path": "/",
-    "query": "",
-    "headers": {"Content-Type": "application/json"},
-    "body": null
+    "query": ""
   },
   "actual": {
     "method": "POST",

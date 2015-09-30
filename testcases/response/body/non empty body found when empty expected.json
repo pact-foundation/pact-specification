@@ -1,6 +1,6 @@
 {
   "match": false,
-  "comment": "Not null body found, when a null body was expected",
+  "comment": "Non empty body found, when an empty body was expected",
   "expected" : {
     "headers": {"Content-Type": "application/json"},
     "body": null
