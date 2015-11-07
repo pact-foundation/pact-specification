@@ -139,6 +139,34 @@ This will allow expressions like `HEADERY: ValueA, ValueB` with
 }
 ```
 
+#### Introduce example generators
+
+The example requests and response bodies stored in a pact file are static. The idea being that the pact file represents a
+contract that can always be fulfilled if the provider is in the correct state. However, this assumption is not always
+correct. In some cases, dates and times may need to be relative to the current date and time, and some things like tokens may
+have a very short life span.
+
+An example of the date issue is a provider which only accepts a date value in the current financial year. As soon as we
+switch over to a new financial year (or any time period), that pact file can no longer be used.
+
+This proposal introduces the concept of an example value generator, which can replace an example value based on a path
+with a dynamically generated one.
+
+```json
+{
+  "body": {
+    "id": 100,
+    "processDate": "2015-07-01"
+  },
+  "generators": {
+    "$.body.processDate": {
+      "type": "date",
+      "values": ["today"]
+    }
+  }
+}
+```
+
 #### Allow schemas to be defined request, response and message content
 
 This would add a schema element to each body/content. The schema would be used to validate the request bodies in the
