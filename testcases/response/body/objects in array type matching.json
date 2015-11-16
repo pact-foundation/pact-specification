@@ -4,10 +4,13 @@
   "expected": {
     "headers": {},
     "body": [{
-      "Name": "John Smith",
-      "Age": 50
+      "name": "John Smith",
+      "age": 50
     }],
     "matchingRules": {
+      "$.body": {
+        "match": "type"
+      },
       "$.body[*]": {
         "match": "type"
       },
