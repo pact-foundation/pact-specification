@@ -2,7 +2,7 @@
 1. Read the rest of this file.
 2. Read the [implementation guidelines](/implementation-guidelines/README.md)
 3. Join the [pact-dev](https://groups.google.com/forum/#!forum/pact-dev) Google group and let people know what you'd like to do and find out if someone has already started work on anything similar.
-4. Do it! Ensure your implementation passes all the tests in the testcases directory of the appropriate branch. Start with [version-1](/tree/version-1/testcases) and get that out and battle test it. Then, try for versions 2 and 3.
+4. Do it! Ensure your implementation passes all the tests in the testcases directory of the appropriate branch. Start with [version-1](https://github.com/pact-foundation/pact-specification/tree/version-1/testcases) and get that out and battle test it. Then, try for versions 2 and 3.
 
 # Introduction
 
