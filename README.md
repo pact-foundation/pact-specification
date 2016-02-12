@@ -167,6 +167,15 @@ with a dynamically generated one.
 }
 ```
 
+#### Content-Type header matching should include charset in the matching
+
+A lot of failures with content types arise when the actual header includes a charset, while the expectation does not.
+It is desirable that this not fail matching when the charset is the default.
+
+For example, the expected header is set to `application/json` while the actual one is `application/json;charset=UTF-8`.
+
+Here, UTF-8 is the default, so these two values should be equivalent.
+
 #### Allow schemas to be defined request, response and message content
 
 This would add a schema element to each body/content. The schema would be used to validate the request bodies in the
