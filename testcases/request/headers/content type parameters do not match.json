@@ -1,12 +1,12 @@
 {
-  "match": true,
-  "comment": "Headers match when the actual includes additional parameters",
+  "match": false,
+  "comment": "Headers don't match when the parameters are different",
   "expected" : {
     "method": "POST",
     "path": "/path",
     "query": {},
     "headers": {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json; charset=UTF-16"
     }
   },
   "actual": {
