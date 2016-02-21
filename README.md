@@ -1,3 +1,5 @@
+<img src="https://github.com/pact-foundation/pact-logo/blob/master/media/logo-black.png" width="200">
+
 # How to get started writing a Pact implementation
 1. Read the rest of this file.
 2. Read the [implementation guidelines](/implementation-guidelines/README.md)
