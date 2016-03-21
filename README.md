@@ -171,6 +171,25 @@ Request Example:
 }
 ```
 
+#### Add an equality matcher
+
+Matchers on body elements cascade. Once a matcher is set, there needs to be a way to reset the matching on a child element.
+This proposal introduces an equality matcher to reset the matching back to the default.
+
+Example:
+
+```json
+"matchers": {
+  "body": {
+    "$.animals": {"min": 1, "match": "type"},
+    "$.animals[*].*": {"match": "type"},
+    "$.animals[*].children": {"min": 1},
+    "$.animals[*].children[*].*": {"match": "type"},
+    "$.animals[*].children[*].*.name": {"match": "equality"}
+  }
+}
+```
+
 #### Introduce example generators
 
 The example requests and response bodies stored in a pact file are static. The idea being that the pact file represents a
