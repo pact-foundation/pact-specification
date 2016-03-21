@@ -139,6 +139,38 @@ This will allow expressions like `HEADERY: ValueA, ValueB` with
 }
 ```
 
+#### Drop the Jsonpath notation for matchers
+
+The matchers are defined in terms of a Jsonpath expression. This has caused some confusion, and is unnecessary. Secondly,
+only a subset of Jsonpath is supported. This proposal is drop Jsonpath expressions in the matcher keys, and have request/response
+type definitions instead. Jsonpath will still be used internally for matching body elements.
+
+Request Example:
+
+```json
+"matchers": {
+  "path": [
+    { "match": "regex", "value": "\\w+" }
+  ],
+  "query": {
+    "Q1": [
+      { "match": "regex", "value": "\\w+" }
+    ]
+  },
+  "header": {
+    "Accept": [
+        { "match" : "regex", "value" : "\\w+" }
+    ]
+  },
+  "body": {
+    "$.animals": {"min": 1, "match": "type"},
+    "$.animals[*].*": {"match": "type"},
+    "$.animals[*].children": {"min": 1},
+    "$.animals[*].children[*].*": {"match": "type"}
+  }
+}
+```
+
 #### Introduce example generators
 
 The example requests and response bodies stored in a pact file are static. The idea being that the pact file represents a
