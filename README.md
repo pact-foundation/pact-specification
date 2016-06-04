@@ -119,9 +119,11 @@ to
 ```json
 {
   "matchingRules": {
-    "path": [
-      {"match": "A"}
-    ]
+    "path": {
+        "matchers": [
+          {"match": "A"}
+        ]
+    }
   }
 }
 ```
@@ -131,10 +133,28 @@ This will allow expressions like `HEADERY: ValueA, ValueB` with
 ```json
 {
   "matchingRules": {
-    "$.header.HEADERY": [
-      {"match": "include", "value": "ValueA"},
-      {"match": "include", "value": "ValueB"}
-    ]
+    "$.header.HEADERY": {
+        "matchers": [
+          {"match": "include", "value": "ValueA"},
+          {"match": "include", "value": "ValueB"}
+        ]
+    }
+  }
+}
+```
+
+It would also be required to define whether the matchers should be combined with logical AND (all matchers must match) or OR (at least one matcher must match). AND should be the default, but there are cases where an OR makes sense.
+
+```json
+{
+  "matchingRules": {
+    "$.header.HEADERY": {
+        "combine": "AND",
+        "matchers": [
+          {"match": "include", "value": "ValueA"},
+          {"match": "include", "value": "ValueB"}
+        ]
+    }
   }
 }
 ```
@@ -149,24 +169,38 @@ Request Example:
 
 ```json
 "matchers": {
-  "path": [
-    { "match": "regex", "value": "\\w+" }
-  ],
+  "path": {
+    "matchers": [
+        { "match": "regex", "value": "\\w+" }
+      ]
+  },
   "query": {
-    "Q1": [
-      { "match": "regex", "value": "\\w+" }
-    ]
+    "Q1": {
+        "matchers": [
+          { "match": "regex", "value": "\\w+" }
+        ]
+    }
   },
   "header": {
-    "Accept": [
-        { "match" : "regex", "value" : "\\w+" }
-    ]
+    "Accept": {
+        "matchers": [
+            { "match" : "regex", "value" : "\\w+" }
+        ]
+    }
   },
   "body": {
-    "$.animals": {"min": 1, "match": "type"},
-    "$.animals[*].*": {"match": "type"},
-    "$.animals[*].children": {"min": 1},
-    "$.animals[*].children[*].*": {"match": "type"}
+    "$.animals": {
+        "matchers": [{"min": 1, "match": "type"}]
+    },
+    "$.animals[*].*": {
+        "matchers": [{"match": "type"}]
+    },
+    "$.animals[*].children": {
+        "matchers": [{"min": 1}]
+    },
+    "$.animals[*].children[*].*": {
+        "matchers": [{"match": "type"}]
+    }
   }
 }
 ```
