@@ -1,6 +1,6 @@
 {
   "match": false,
-  "comment": "objects in array with type mismatching",
+  "comment": "XML objects in array with type mismatching",
   "expected": {
     "headers": {},
     "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><people><person name=\"John Smith\" age=\"50\"/></people>",

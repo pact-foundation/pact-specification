@@ -1,6 +1,6 @@
 {
   "match": true,
-  "comment": "XML Types and regular expressions match",
+  "comment": "XML Tag with at least one element match",
   "expected" : {
     "method": "POST",
     "path": "/",
