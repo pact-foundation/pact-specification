@@ -35,6 +35,8 @@ Note: One implications of this philosophy is that you cannot verify, using pact,
 
 * [Version 2](https://github.com/pact-foundation/pact-specification/tree/version-2) - Introduces non-language specific regular expression and type matching.
 
-* [Version 3](https://github.com/pact-foundation/pact-specification/tree/version-3) - WIP - Introduces pact format for message queues and corrects some issues with V2.
+* [Version 3](https://github.com/pact-foundation/pact-specification/tree/version-3) - Introduces pact format for message queues and corrects some issues with V2.
+
+* [Version 4](https://github.com/pact-foundation/pact-specification/tree/version-4) - WIP - Left over candidates from V3.
 
 [postel]: http://en.wikipedia.org/wiki/Jon_Postel#Postel.27s_Law
