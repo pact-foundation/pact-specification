@@ -1,16 +1,28 @@
 # Introduction
 
-["Pact"](https://github.com/realestate-com-au/pact) is an implementation of "consumer driven contract" testing that allows mocking of responses in the consumer codebase, and verification of the interactions in the provider codebase. The initial implementation was written in Ruby for Rack apps, however a consumer and provider may be implemented in different programming languages, so the "mocking" and the "verifying" steps would be best supported by libraries in their respective project's native languages. Given that the pact file is written in JSON, it should be straightforward to implement a pact library in any language, however, to get the best experience and most reliability of out mixing pact libraries, the matching logic for the requests and responses needs to be identical. There is little confidence to be gained in having your pacts "pass" if the logic used to verify a "pass" is inconsistent between implementations.
+["Pact"](https://github.com/realestate-com-au/pact) is an implementation of "consumer driven contract" testing that
+allows mocking of responses in the consumer codebase, and verification of the interactions in the provider codebase.
+The initial implementation was written in Ruby for Rack apps, however a consumer and provider may be implemented in
+different programming languages, so the "mocking" and the "verifying" steps would be best supported by libraries in
+their respective project's native languages. Given that the pact file is written in JSON, it should be straightforward
+to implement a pact library in any language, however, to get the best experience and most reliability of out mixing
+pact libraries, the matching logic for the requests and responses needs to be identical. There is little confidence to
+be gained in having your pacts "pass" if the logic used to verify a "pass" is inconsistent between implementations.
 
-To support consistency of matching logic, this specification has been developed as a benchmark that all pact libraries can check themselves against if they want to ensure consistency with other pact libraries.
+To support consistency of matching logic, this specification has been developed as a benchmark that all pact libraries
+can check themselves against if they want to ensure consistency with other pact libraries.
 
 ### Pact Specification Philosophy
 
-* Be as strict as we reasonably can with what we send out (requests). We should know and be able to control exactly what a consumer is sending out. Information should not be allowed to "leak" silently.
-* Be as loose as we reasonably can with what we accept (responses). A provider should be able to send extra information that this particular consumer does not care about, without breaking this consumer.
-* When writing the matching rules, err on the side of being more strict now, because it will break fewer things to be looser later, than to get stricter later.
+* Be as strict as we reasonably can with what we send out (requests). We should know and be able to control exactly
+what a consumer is sending out. Information should not be allowed to "leak" silently.
+* Be as loose as we reasonably can with what we accept (responses). A provider should be able to send extra information
+that this particular consumer does not care about, without breaking this consumer.
+* When writing the matching rules, err on the side of being more strict now, because it will break fewer things to be
+looser later, than to get stricter later.
 
-Note: One implications of this philosophy is that you cannot verify, using pact, that a key or a header will _not_ be present in a response. You can only verify what _is_.
+Note: One implications of this philosophy is that you cannot verify, using pact, that a key or a header will _not_ be
+present in a response. You can only verify what _is_.
 
 ### Version 2.0
 
@@ -57,7 +69,7 @@ Exact string match for expected header names and values. Allow unexpected header
 
 ### Differences from V1
 
-The main difference from V1 is the semantics around the body element in the pact files. This specification defines the
+The main difference from V1 is the semantics around the body element in the pact files and the addition of matchers. This specification defines the
 following conditions:
 
 #### Body is present
@@ -97,37 +109,97 @@ This is an example of a pact file:
 
 ```json
 {
-  "provider": {
-    "name": "Alice Service"
-  },
-  "consumer": {
-    "name": "Consumer"
-  },
-  "interactions": [
-    {
-      "providerState" : "Good Mallory exists",
-      "description": "a retrieve Mallory request",
-      "request": {
-        "method": "GET",
-        "path": "/mallory",
-        "query": "name=ron&status=good"
-      },
-      "response": {
-        "status": 200,
-        "headers": {
-          "Content-Type": "text/html"
-        },
-        "body": "\"That is some good Mallory.\""
-      }
-    }
-  ],
-  "metadata": {
-    "pact-specification": {
-      "version": "1.1.0"
+    "provider": {
+        "name": "266_provider"
     },
-    "pact-jvm": {
-      "version": "1.0.0"
+    "consumer": {
+        "name": "test_consumer"
+    },
+    "interactions": [
+        {
+            "description": "get all users for max",
+            "request": {
+                "method": "GET",
+                "path": "/idm/user"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json; charset=UTF-8"
+                },
+                "body": [
+                    [
+                        {
+                            "email": "rddtGwwWMEhnkAPEmsyE",
+                            "id": "eb0f8c17-c06a-479e-9204-14f7c95b63a6",
+                            "userName": "AJQrokEGPAVdOHprQpKP"
+                        }
+                    ]
+                ],
+                "matchingRules": {
+                    "$.body[0][*].email": {
+                        "match": "type"
+                    },
+                    "$.body[0][*].id": {
+                        "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                    },
+                    "$.body[0]": {
+                        "max": 5,
+                        "match": "type"
+                    },
+                    "$.body[0][*].userName": {
+                        "match": "type"
+                    }
+                }
+            },
+            "providerState": "a user with an id named 'user' exists"
+        },
+        {
+            "description": "get all users for min",
+            "request": {
+                "method": "GET",
+                "path": "/idm/user"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json; charset=UTF-8"
+                },
+                "body": [
+                    [
+                        {
+                            "email": "DPvAfkCZpOBZWzKYiDMC",
+                            "id": "95d0371b-bf30-4943-90a8-8bb1967c4cb2",
+                            "userName": "GIUlVKoiLdHLYNKGbcSy"
+                        }
+                    ]
+                ],
+                "matchingRules": {
+                    "$.body[0][*].email": {
+                        "match": "type"
+                    },
+                    "$.body[0][*].id": {
+                        "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                    },
+                    "$.body[0]": {
+                        "min": 5,
+                        "match": "type"
+                    },
+                    "$.body[0][*].userName": {
+                        "match": "type"
+                    }
+                }
+            },
+            "providerState": "a user with an id named 'user' exists"
+        }
+    ],
+    "metadata": {
+        "pact-specification": {
+            "version": "2.0.0"
+        },
+        "pact-jvm": {
+            "version": "3.2.11"
+        }
     }
-  }
 }
 ```
