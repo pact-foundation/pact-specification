@@ -54,3 +54,80 @@ Exact string match for expected header names and values. Allow unexpected header
 
 * Allow unexpected keys to be sent back in the body. See "Pact Specification Philosophy" in main README.
 * Do not allow unexpected items in an array. Most parsing code will do a "for each" on an array, and if we expect one item, but receive two, we might not have exercised the correct code to handle that second item in our consumer tests.
+
+### Differences from V1
+
+The main difference from V1 is the semantics around the body element in the pact files. This specification defines the
+following conditions:
+
+#### Body is present
+
+If the body of the request or response is present, then follow the normal rules for matching the bodies.
+
+#### Body is absent
+
+If there is no body in the pact file, then this indicates that the body contents are not important, and can be ignored.
+
+#### Body is present, but empty
+
+If the body is present in the pact file, but is an empty string, then this indicates that the request or response body must be
+empty.
+
+#### Body is present, but is null
+
+This is a side effect of JSON and language implementations with NULL values. It has the following semantics:
+
+1. Where the content type is `application\json`, this represents a valid JSON document consisting of the single JSON value
+of `null`. It may be treated as either an empty body or follow the rules for matching bodies. The preference would be to
+treat it as a JSON body and use an empty string for an absent body.
+2. For other content types, it is treated as an empty body for matching purposes.
+
+#### Content type of the body
+
+By default, the content type comes from the `Content-Type` header. The following rules determine the content type:
+
+1. If there is a `Content-Type` header, the value of the header determines the content type.
+2. If the `Content-Type` header, is not present, then:
+    1. OPTIONAL - The content type can be determined from the first few characters of the body (know as a magic number test).
+    2. default to either `application/json` (as V1) or `text/plain`.
+
+## Example
+
+This is an example of a pact file:
+
+```json
+{
+  "provider": {
+    "name": "Alice Service"
+  },
+  "consumer": {
+    "name": "Consumer"
+  },
+  "interactions": [
+    {
+      "providerState" : "Good Mallory exists",
+      "description": "a retrieve Mallory request",
+      "request": {
+        "method": "GET",
+        "path": "/mallory",
+        "query": "name=ron&status=good"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/html"
+        },
+        "body": "\"That is some good Mallory.\""
+      }
+    }
+  ],
+  "metadata": {
+    "pact-specification": {
+      "version": "1.1.0"
+    },
+    "pact-jvm": {
+      "version": "1.0.0"
+    }
+  }
+}
+```
