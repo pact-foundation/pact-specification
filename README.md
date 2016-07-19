@@ -47,3 +47,43 @@ Exact string match for expected header names and values. Allow unexpected header
 
 * Allow unexpected keys to be sent back in the body. See "Pact Specificaton Philosophy" in main README.
 * Do not allow unexpected items in an array. Most parsing code will do a "for each" on an array, and if we expect one item, but receive two, we might not have exercised the correct code to handle that second item in our consumer tests.
+
+## Example
+
+This is an example of a pact file:
+
+```json
+{
+  "provider": {
+    "name": "Alice Service"
+  },
+  "consumer": {
+    "name": "Consumer"
+  },
+  "interactions": [
+    {
+      "description": "a retrieve Mallory request",
+      "request": {
+        "method": "GET",
+        "path": "/mallory",
+        "query": "name=ron&status=good"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/html"
+        },
+        "body": "\"That is some good Mallory.\""
+      }
+    }
+  ],
+  "metadata": {
+    "pact-specification": {
+      "version": "1.0.0"
+    },
+    "pact-jvm": {
+      "version": "1.0.0"
+    }
+  }
+}
+```
