@@ -24,14 +24,14 @@ looser later, than to get stricter later.
 Note: One implications of this philosophy is that you cannot verify, using pact, that a key or a header will _not_ be
 present in a response. You can only verify what _is_.
 
-### Version 3.0 (WIP)
+### Version 3.0
 
 Version 3.0 introduces the following changes from 2.0:
 
 #### Introduces messages for services that communicate via event streams and message queues
 
-This proposal is to introduce a non-request/response interaction to support message queues where the flow may be one way. Pact file format will be expanded to be able
-to include something like
+This proposal is to introduce a non-request/response interaction to support message queues where the flow may be one way.
+Pact file format will be expanded to be able to include:
 
 ```json
 {
@@ -60,7 +60,7 @@ As some message formats are binary, it may be necessary to Base64 encode the mes
 
 #### Query strings are stored as Map instead of strings
 
-Currently the query strings are stored as a single string, e.g.:
+In previous versions, the query strings are stored as a single string, e.g.:
 
 ```json
 "request": {
@@ -86,7 +86,7 @@ This proposal is to store them in un-encoded map of keys to list of values forma
 
 #### Allow multiple provider states with parameters
 
-Currently, provider states are defined as a descriptive string. There is no way to infer the data required for the state
+In previous versions, provider states are defined as a descriptive string. There is no way to infer the data required for the state
 without encoding the values into the description.
 
 ```json
@@ -113,7 +113,7 @@ The change would be:
 
 #### Allow arrays of matchers to be defined against a matcher path
 
-The current matchers only allow one matcher to be defined for a value. There is no way to combine matchers to do something
+The V2 matchers only allow one matcher to be defined for a value. There is no way to combine matchers to do something
 like value must match A and must match B.
 
 Proposal is  to change
@@ -145,27 +145,32 @@ This will allow expressions like `HEADERY: ValueA, ValueB` with
 ```json
 {
   "matchingRules": {
-    "$.header.HEADERY": {
-        "matchers": [
-          {"match": "include", "value": "ValueA"},
-          {"match": "include", "value": "ValueB"}
-        ]
+    "header": {
+      "HEADERY": {
+          "matchers": [
+            {"match": "include", "value": "ValueA"},
+            {"match": "include", "value": "ValueB"}
+          ]
+      }
     }
   }
 }
 ```
 
-It would also be required to define whether the matchers should be combined with logical AND (all matchers must match) or OR (at least one matcher must match). AND should be the default, but there are cases where an OR makes sense.
+It would also be required to define whether the matchers should be combined with logical AND (all matchers must match)
+or OR (at least one matcher must match). AND should be the default, but there are cases where an OR makes sense.
 
 ```json
 {
   "matchingRules": {
-    "$.header.HEADERY": {
-        "combine": "AND",
-        "matchers": [
-          {"match": "include", "value": "ValueA"},
-          {"match": "include", "value": "ValueB"}
-        ]
+    "header": {
+      "HEADERY": {
+          "combine": "AND",
+          "matchers": [
+            {"match": "include", "value": "ValueA"},
+            {"match": "include", "value": "ValueB"}
+          ]
+      }
     }
   }
 }
@@ -238,7 +243,7 @@ Example:
 
 #### Add more specific type matchers
 
-Type matchers sometimes need to be more specific. Sometimes just matching the type of the example is not enought. Dates
+Type matchers sometimes need to be more specific. Sometimes just matching the type of the example is not enough. Dates
 and times are normally encoded as strings (these are addressed in proposal
 [Matching times and dates in a cross-platform manner](#matching-times-and-dates-in-a-cross-platform-manner)). Sometimes
 numeric values need to be ensured that they match the specific numeric type. This is especially important for financial
@@ -271,9 +276,11 @@ with a dynamically generated one.
     "processDate": "2015-07-01"
   },
   "generators": {
-    "$.body.processDate": {
-      "type": "date",
-      "values": ["today"]
+    "body": {
+      "$.processDate": {
+        "type": "date",
+        "values": ["today"]
+      }
     }
   }
 }
@@ -316,10 +323,9 @@ e.g:
 * https://groups.google.com/forum/#!topic/pact-support/d0nXzVi1Nf0
 * https://groups.google.com/forum/#!topic/pact-support/YHw7hgD1d4g
 
-### Differences from V1
+### Semantics around body values
 
-The main difference from V1 is the semantics around the body element in the pact files and the addition of matchers. This specification defines the
-following conditions:
+The semantics around the body element in the pact files is defined by the following rules:
 
 #### Body is present
 
@@ -361,7 +367,7 @@ This is a map of JSON path strings to a matcher. When an item is being compared,
 rules that corresponds to the path to the item, the comparison will be delegated to the defined matcher. Note that the
 matching rules cascade, so a rule can be specified on a value and will apply to all children of that value.
 
-#### Matcher Path expressions
+#### Matcher Path expressions in bodies
 
 Pact does not support the full JSON path expressions, only ones that match the following rules:
 
@@ -371,7 +377,7 @@ Pact does not support the full JSON path expressions, only ones that match the f
 4. Path elements represent keys.
 5. A star (`*`) can be used to match all keys of a map or all items of an array (one level only).
 
-So the expression `$.body.item1.level[2].id` will match the highlighted item in the following body:
+So the expression `$.item1.level[2].id` will match the highlighted item in the following body:
 
 ```js
 {
@@ -384,7 +390,7 @@ So the expression `$.body.item1.level[2].id` will match the highlighted item in 
         "id": 101
       },
       {
-        "id": 102 // <---- $.body.item1.level[2].id
+        "id": 102 // <---- $.item1.level[2].id
       },
       {
         "id": 103
@@ -394,7 +400,7 @@ So the expression `$.body.item1.level[2].id` will match the highlighted item in 
 }
 ```
 
-while `$.body.*.level[*].id` will match all the ids of all the levels for all items.
+while `$.*.level[*].id` will match all the ids of all the levels for all items.
 
 ##### Matcher selection algorithm
 
@@ -437,20 +443,18 @@ The expressions will have the following weightings:
 | expression | weighting calculation | weighting |
 |------------|-----------------------|-----------|
 | $ | $(2) | 2 |
-| $.body | $(2).body(2) | 4 |
-| $.body.item1 | $(2).body(2).item1(2) | 8 |
-| $.body.item2 | $(2).body(2).item2(0) | 0 |
-| $.header.item1 | $(2).header(0).item1(2) | 0 |
-| $.body.item1.level | $(2).body(2).item1(2).level(2) | 16 |
-| $.body.item1.level[1] | $(2).body(2).item1(2).level(2)[1(2)] | 32 |
-| $.body.item1.level[1].id | $(2).body(2).item1(2).level(2)[1(2)].id(2) | 64 |
-| $.body.item1.level[1].name | $(2).body(2).item1(2).level(2)[1(2)].name(0) | 0 |
-| $.body.item1.level[2] | $(2).body(2).item1(2).level(2)[2(0)] | 0 |
-| $.body.item1.level[2].id | $(2).body(2).item1(2).level(2)[2(0)].id(2) | 0 |
-| $.body.item1.level[*].id | $(2).body(2).item1(2).level(2)[*(1)].id(2) | 32 |
-| $.body.\*.level[\*].id | $(2).body(2).*(1).level(2)[*(1)].id(2) | 8 |
+| $.item1 | $(2).item1(2) | 4 |
+| $.item2 | $(2).item2(0) | 0 |
+| $.item1.level | $(2).item1(2).level(2) | 8 |
+| $.item1.level[1] | $(2).item1(2).level(2)[1(2)] | 16 |
+| $.item1.level[1].id | $(2).item1(2).level(2)[1(2)].id(2) | 32 |
+| $.item1.level[1].name | $(2).item1(2).level(2)[1(2)].name(0) | 0 |
+| $.item1.level[2] | $(2).item1(2).level(2)[2(0)] | 0 |
+| $.item1.level[2].id | $(2).item1(2).level(2)[2(0)].id(2) | 0 |
+| $.item1.level[*].id | $(2).item1(2).level(2)[*(1)].id(2) | 16 |
+| $.\*.level[\*].id | $(2).*(1).level(2)[*(1)].id(2) | 8 |
 
-So for the item with id 102, the matcher with path `$.body.item1.level[1].id` and weighting 64 will be selected.
+So for the item with id 102, the matcher with path `$.item1.level[1].id` and weighting 32 will be selected.
 
 #### Supported matchers
 
@@ -463,7 +467,8 @@ The following matchers are supported:
 | Type | `{ "match": "type" }` | This executes a type based match against the values, that is, they are equal if they are the same type. |
 | MinType | `{ "match": "type", "min": 2 }` | This executes a type based match against the values, that is, they are equal if they are the same type. In addition, if the values represent a collection, the length of the actual value is compared against the minimum. |
 | MaxType | `{ "match": "type", "max": 10 }` | This executes a type based match against the values, that is, they are equal if they are the same type. In addition, if the values represent a collection, the length of the actual value is compared against the maximum. |
-
+| Integer | `{ "match": "integer" }` | Matches the example by type, and ensures that the actual value is also an integer  |
+| Decimal | `{ "match": "decimal" }` | Matches the example by type, and ensures that the actual value is also a decimal number (has decimal places) |
 
 ## Example
 
