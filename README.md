@@ -185,7 +185,7 @@ type definitions instead. Jsonpath will still be used internally for matching bo
 Request Example:
 
 ```json
-"matchers": {
+"matchingRules": {
   "path": {
     "matchers": [
         { "match": "regex", "value": "\\w+" }
@@ -230,13 +230,13 @@ This proposal introduces an equality matcher to reset the matching back to the d
 Example:
 
 ```json
-"matchers": {
+"matchingRules": {
   "body": {
-    "$.animals": {"min": 1, "match": "type"},
-    "$.animals[*].*": {"match": "type"},
-    "$.animals[*].children": {"min": 1},
-    "$.animals[*].children[*].*": {"match": "type"},
-    "$.animals[*].children[*].*.name": {"match": "equality"}
+    "$.animals": { "matchers": [{"min": 1, "match": "type"}] },
+    "$.animals[*].*": { "matchers": [{"match": "type"}] },
+    "$.animals[*].children": { "matchers": [{"min": 1}] },
+    "$.animals[*].children[*].*": { "matchers": [{"match": "type"}] },
+    "$.animals[*].children[*].*.name": { "matchers": [{"match": "equality"}] }
   }
 }
 ```
@@ -489,10 +489,14 @@ This is an example of a pact file:
                 "matchingRules": {
                     "body": {
                         "$[0].id": {
-                            "match": "type"
+                            "matchers": [
+                              { "match": "type" }
+                            ]
                         },
                         "$[1].id": {
-                            "match": "type"
+                            "matchers": [
+                              { "match": "type" }
+                            ]
                         }
                     }
                 }
@@ -529,25 +533,39 @@ This is an example of a pact file:
                 "matchingRules": {
                     "body": {
                         "$[2].name": {
-                            "match": "type"
+                            "matchers": [
+                              { "match": "type" }
+                            ]
                         },
                         "$[0].id": {
-                            "match": "type"
+                            "matchers": [
+                              { "match": "type" }
+                            ]
                         },
                         "$[1].id": {
-                            "match": "type"
+                            "matchers": [
+                              { "match": "type" }
+                            ]
                         },
                         "$[2].id": {
-                            "match": "type"
+                            "matchers": [
+                              { "match": "type" }
+                            ]
                         },
                         "$[1].name": {
-                            "match": "type"
+                            "matchers": [
+                              { "match": "type" }
+                            ]
                         },
                         "$[0].name": {
-                            "match": "type"
+                            "matchers": [
+                              { "match": "type" }
+                            ]
                         },
                         "$[0].dob": {
-                            "date": "yyyy-MM-dd"
+                            "matchers": [
+                              { "date": "yyyy-MM-dd" }
+                            ]
                         }
                     }
                 }
@@ -592,34 +610,49 @@ This is an example of a pact file:
                 "matchingRules": {
                     "body": {
                         "$.data.array3[0]": {
-                            "max": 5,
-                            "match": "type"
+                            "matchers": [
+                              { "max": 5, "match": "type" }
+                            ]
                         },
                         "$.data.array1": {
-                            "min": 0,
-                            "match": "type"
+                            "matchers": [
+                              { "min": 0, "match": "type" }
+                            ]
                         },
                         "$.data.array2": {
-                            "min": 1,
-                            "match": "type"
+                            "matchers": [
+                              { "min": 1, "match": "type" }
+                            ]
                         },
                         "$.id": {
-                            "match": "type"
+                            "matchers": [
+                              { "match": "type" }
+                            ]
                         },
                         "$.data.array3[0][*].itemCount": {
-                            "match": "integer"
+                            "matchers": [
+                              { "match": "integer" }
+                            ]
                         },
                         "$.data.array2[*].name": {
-                            "match": "type"
+                            "matchers": [
+                              { "match": "type" }
+                            ]
                         },
                         "$.data.array2[*].address": {
-                            "regex": "(\\d{1,3}\\.)+\\d{1,3}"
+                            "matchers": [
+                              { "regex": "(\\d{1,3}\\.)+\\d{1,3}" }
+                            ]
                         },
                         "$.data.array1[*].name": {
-                            "match": "type"
+                            "matchers": [
+                              { "match": "type" }
+                            ]
                         },
                         "$.data.array1[*].id": {
-                            "match": "type"
+                            "matchers": [
+                              { "match": "type" }
+                            ]
                         }
                     }
                 }
