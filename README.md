@@ -245,7 +245,7 @@ Example:
 
 Type matchers sometimes need to be more specific. Sometimes just matching the type of the example is not enough. Dates
 and times are normally encoded as strings (these are addressed in proposal
-[Matching times and dates in a cross-platform manner](#matching-times-and-dates-in-a-cross-platform-manner)). Sometimes
+[Matching times and dates in a cross-platform manner](tree/version-4#matching-times-and-dates-in-a-cross-platform-manner)). Sometimes
 numeric values need to be ensured that they match the specific numeric type. This is especially important for financial
 systems, where a rounding error can be catastrophic. The general type matcher will match 100 and 100.01.
 
@@ -295,33 +295,11 @@ For example, the expected header is set to `application/json` while the actual o
 
 Here, charset parameter is additional data, so these two values should be equivalent.
 
-#### Allow schemas to be defined request, response and message content
-
-This would add a schema element to each body/content. The schema would be used to validate the request bodies in the
-consumer tests and the response bodies in the provider bodies. JSONSchema could be used for JSON bodies, and for XML XSD or
-something like schematron.
-
-#### Matching times and dates in a cross-platform manner
-
-Regular expression matching only allows syntactic evaluation of times and dates. It is quite hard to define expressions
-that could determine that dates like '29-02-2001' are invalid. Dates also have different defaulting behavior on different platforms.
-
-e.g:
-
-| Platform | Expression | Result |
-| -------- | ---------- | ------ |
-| JVM | `new Date().parse("dd-MM-yyyy", "29-02-2001")` | Thu Mar 01 00:00:00 AEDT 2001 |
-| JVM Jodatime | `DateTime dateTime  = DateTime.parse("29-02-2001", DateTimeFormat.forPattern("dd-MM-yyyy"))` | org.joda.time.IllegalFieldValueException: Cannot parse "29-02-2001": Value 29 for dayOfMonth must be in the range [1,28] |
-| Javascript | `new Date(Date.parse('Feb 29, 2001')).toString()` | Thu Mar 01 2001 00:00:00 GMT+1100 (AEDT) |
-| Ruby | `Date.strptime('29-02-2001', '%d-%m-%Y')` | invalid date (ArgumentError) |
-
-
 ### References
 
 * https://groups.google.com/forum/#!topic/pact-dev/T3TYHJWWw2c
 * https://github.com/DiUS/pact-jvm/issues/97
 * https://groups.google.com/forum/#!topic/pact-support/d0nXzVi1Nf0
-* https://groups.google.com/forum/#!topic/pact-support/YHw7hgD1d4g
 
 ### Semantics around body values
 
@@ -477,17 +455,17 @@ This is an example of a pact file:
 ```json
 {
     "provider": {
-        "name": "266_provider"
+        "name": "test_provider_array"
     },
     "consumer": {
-        "name": "test_consumer"
+        "name": "test_consumer_array"
     },
     "interactions": [
         {
-            "description": "get all users for max",
+            "description": "java test interaction with a DSL array body",
             "request": {
                 "method": "GET",
-                "path": "/idm/user"
+                "path": "/"
             },
             "response": {
                 "status": 200,
@@ -495,37 +473,36 @@ This is an example of a pact file:
                     "Content-Type": "application/json; charset=UTF-8"
                 },
                 "body": [
-                    [
-                        {
-                            "email": "rddtGwwWMEhnkAPEmsyE",
-                            "id": "eb0f8c17-c06a-479e-9204-14f7c95b63a6",
-                            "userName": "AJQrokEGPAVdOHprQpKP"
-                        }
-                    ]
+                    {
+                        "dob": "07/19/2016",
+                        "id": 8958464620,
+                        "name": "Rogger the Dogger",
+                        "timestamp": "2016-07-19T12:14:39"
+                    },
+                    {
+                        "dob": "07/19/2016",
+                        "id": 4143398442,
+                        "name": "Cat in the Hat",
+                        "timestamp": "2016-07-19T12:14:39"
+                    }
                 ],
                 "matchingRules": {
-                    "$.body[0][*].email": {
-                        "match": "type"
-                    },
-                    "$.body[0][*].id": {
-                        "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
-                    },
-                    "$.body[0]": {
-                        "max": 5,
-                        "match": "type"
-                    },
-                    "$.body[0][*].userName": {
-                        "match": "type"
+                    "body": {
+                        "$[0].id": {
+                            "match": "type"
+                        },
+                        "$[1].id": {
+                            "match": "type"
+                        }
                     }
                 }
-            },
-            "providerState": "a user with an id named 'user' exists"
+            }
         },
         {
-            "description": "get all users for min",
+            "description": "test interaction with a array body with templates",
             "request": {
                 "method": "GET",
-                "path": "/idm/user"
+                "path": "/"
             },
             "response": {
                 "status": 200,
@@ -533,36 +510,125 @@ This is an example of a pact file:
                     "Content-Type": "application/json; charset=UTF-8"
                 },
                 "body": [
-                    [
-                        {
-                            "email": "DPvAfkCZpOBZWzKYiDMC",
-                            "id": "95d0371b-bf30-4943-90a8-8bb1967c4cb2",
-                            "userName": "GIUlVKoiLdHLYNKGbcSy"
-                        }
-                    ]
+                    {
+                        "dob": "2016-07-19",
+                        "id": 1943791933,
+                        "name": "ZSAICmTmiwgFFInuEuiK"
+                    },
+                    {
+                        "dob": "2016-07-19",
+                        "id": 1943791933,
+                        "name": "ZSAICmTmiwgFFInuEuiK"
+                    },
+                    {
+                        "dob": "2016-07-19",
+                        "id": 1943791933,
+                        "name": "ZSAICmTmiwgFFInuEuiK"
+                    }
                 ],
                 "matchingRules": {
-                    "$.body[0][*].email": {
-                        "match": "type"
-                    },
-                    "$.body[0][*].id": {
-                        "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
-                    },
-                    "$.body[0]": {
-                        "min": 5,
-                        "match": "type"
-                    },
-                    "$.body[0][*].userName": {
-                        "match": "type"
+                    "body": {
+                        "$[2].name": {
+                            "match": "type"
+                        },
+                        "$[0].id": {
+                            "match": "type"
+                        },
+                        "$[1].id": {
+                            "match": "type"
+                        },
+                        "$[2].id": {
+                            "match": "type"
+                        },
+                        "$[1].name": {
+                            "match": "type"
+                        },
+                        "$[0].name": {
+                            "match": "type"
+                        },
+                        "$[0].dob": {
+                            "date": "yyyy-MM-dd"
+                        }
                     }
                 }
+            }
+        },
+        {
+            "description": "test interaction with an array like matcher",
+            "request": {
+                "method": "GET",
+                "path": "/"
             },
-            "providerState": "a user with an id named 'user' exists"
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json; charset=UTF-8"
+                },
+                "body": {
+                    "data": {
+                        "array1": [
+                            {
+                                "dob": "2016-07-19",
+                                "id": 1600309982,
+                                "name": "FVsWAGZTFGPLhWjLuBOd"
+                            }
+                        ],
+                        "array2": [
+                            {
+                                "address": "127.0.0.1",
+                                "name": "jvxrzduZnwwxpFYrQnpd"
+                            }
+                        ],
+                        "array3": [
+                            [
+                                {
+                                    "itemCount": 652571349
+                                }
+                            ]
+                        ]
+                    },
+                    "id": 7183997828
+                },
+                "matchingRules": {
+                    "body": {
+                        "$.data.array3[0]": {
+                            "max": 5,
+                            "match": "type"
+                        },
+                        "$.data.array1": {
+                            "min": 0,
+                            "match": "type"
+                        },
+                        "$.data.array2": {
+                            "min": 1,
+                            "match": "type"
+                        },
+                        "$.id": {
+                            "match": "type"
+                        },
+                        "$.data.array3[0][*].itemCount": {
+                            "match": "integer"
+                        },
+                        "$.data.array2[*].name": {
+                            "match": "type"
+                        },
+                        "$.data.array2[*].address": {
+                            "regex": "(\\d{1,3}\\.)+\\d{1,3}"
+                        },
+                        "$.data.array1[*].name": {
+                            "match": "type"
+                        },
+                        "$.data.array1[*].id": {
+                            "match": "type"
+                        }
+                    }
+                }
+            }
         }
     ],
     "metadata": {
         "pact-specification": {
-            "version": "2.0.0"
+            "version": "3.0.0"
         },
         "pact-jvm": {
             "version": "3.2.11"
