@@ -80,6 +80,15 @@ of `null`. It may be treated as either an empty body or follow the rules for mat
 treat it as a JSON body and use an empty string for an absent body.
 2. For other content types, it is treated as an empty body for matching purposes.
 
+#### Content type of the body
+
+By default, the content type comes from the `Content-Type` header. The following rules determine the content type:
+
+1. If there is a `Content-Type` header, the value of the header determines the content type.
+2. If the `Content-Type` header, is not present, then:
+    1. OPTIONAL - The content type can be determined from the first few characters of the body (know as a magic number test).
+    2. default to either `application/json` (as V1) or `text/plain`.
+
 ## Example
 
 This is an example of a pact file:
