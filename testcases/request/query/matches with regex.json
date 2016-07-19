@@ -1,6 +1,6 @@
 {
-  "match": false,
-  "comment": "Queries are not the same - hippo is Fred instead of John",
+  "match": true,
+  "comment": "Queries match with regex",
   "expected" : {
     "method": "GET",
     "path": "/path",
@@ -8,7 +8,19 @@
       "alligator": ["Mary"],
       "hippo": ["John"]
     },
-    "headers": {}
+    "headers": {},
+    "matchingRules": {
+      "query": {
+        "hippo": {
+          "matchers": [
+            {
+              "match": "regex",
+              "regex": "\\w+"
+            }
+          ]
+        }
+      }
+    }
   },
   "actual": {
     "method": "GET",
