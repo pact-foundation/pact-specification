@@ -16,7 +16,7 @@
     "path": "/path",
     "query": {
       "alligator": ["Mary"],
-      "hippo": ["Fred"],
+      "hippo": ["John"],
       "elephant": ["unexpected"]
     },
     "headers": {}
