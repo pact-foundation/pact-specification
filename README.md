@@ -31,7 +31,7 @@ Note: One implications of this philosophy is that you cannot verify, using pact,
 
 * [Version 1](https://github.com/pact-foundation/pact-specification/tree/version-1) - A spec that describes the existing matching in the ruby implementation, and provides test cases for implementations in other languages to ensure that matching is consistent.
 
-* [Version 1.1](https://github.com/pact-foundation/pact-specification/tree/version-1.1) - Updated specification shared between ruby, JVM and .Net versions.
+* [Version 1.1](https://github.com/pact-foundation/pact-specification/tree/version-1.1) - Updated specification shared between Ruby, JVM and .Net versions.
 
 * [Version 2](https://github.com/pact-foundation/pact-specification/tree/version-2) - Introduces non-language specific regular expression and type matching.
 
