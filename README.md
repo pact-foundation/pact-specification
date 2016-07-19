@@ -245,7 +245,7 @@ Example:
 
 Type matchers sometimes need to be more specific. Sometimes just matching the type of the example is not enough. Dates
 and times are normally encoded as strings (these are addressed in proposal
-[Matching times and dates in a cross-platform manner](tree/version-4#matching-times-and-dates-in-a-cross-platform-manner)). Sometimes
+[Matching times and dates in a cross-platform manner](https://github.com/pact-foundation/pact-specification/tree/version-4#matching-times-and-dates-in-a-cross-platform-manner)). Sometimes
 numeric values need to be ensured that they match the specific numeric type. This is especially important for financial
 systems, where a rounding error can be catastrophic. The general type matcher will match 100 and 100.01.
 
