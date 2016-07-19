@@ -103,6 +103,119 @@ By default, the content type comes from the `Content-Type` header. The following
     1. OPTIONAL - The content type can be determined from the first few characters of the body (know as a magic number test).
     2. default to either `application/json` (as V1) or `text/plain`.
 
+### Matchers
+
+#### Matching Rules
+
+Pact supports extending the matching rules on each type of object (Request or Response) with a `matchingRules` element in the pact file.
+This is a map of JSON path strings to a matcher. When an item is being compared, if there is an entry in the matching
+rules that corresponds to the path to the item, the comparison will be delegated to the defined matcher. Note that the
+matching rules cascade, so a rule can be specified on a value and will apply to all children of that value.
+
+#### Matcher Path expressions
+
+Pact does not support the full JSON path expressions, only ones that match the following rules:
+
+1. All paths start with a dollar (`$`), representing the root.
+2. All path elements are separated by periods (`.`), except array indices which use square brackets (`[]`).
+3. The second element of the path is the http type that the matcher is applied to (e.g., `$.body` or `$.header`).
+4. Path elements represent keys.
+5. A star (`*`) can be used to match all keys of a map or all items of an array (one level only).
+
+So the expression `$.body.item1.level[2].id` will match the highlighted item in the following body:
+
+```js
+{
+  "item1": {
+    "level": [
+      {
+        "id": 100
+      },
+      {
+        "id": 101
+      },
+      {
+        "id": 102 // <---- $.body.item1.level[2].id
+      },
+      {
+        "id": 103
+      }
+    ]
+  }
+}
+```
+
+while `$.body.*.level[*].id` will match all the ids of all the levels for all items.
+
+##### Matcher selection algorithm
+
+Due to the star notation, there can be multiple matcher paths defined that correspond to an item. The first, most
+specific expression is selected by assigning weightings to each path element and taking the product of the weightings.
+The matcher with the path with the largest weighting is used.
+
+* The root node (`$`) is assigned the value 2.
+* Any path element that does not match is assigned the value 0.
+* Any property name that matches a path element is assigned the value 2.
+* Any array index that matches a path element is assigned the value 2.
+* Any star (`*`) that matches a property or array index is assigned the value 1.
+* Everything else is assigned the value 0.
+
+So for the body with highlighted item:
+
+```js
+{
+  "item1": {
+    "level": [
+      {
+        "id": 100
+      },
+      {
+        "id": 101
+      },
+      {
+        "id": 102 // <--- Item under consideration
+      },
+      {
+        "id": 103
+      }
+    ]
+  }
+}
+```
+
+The expressions will have the following weightings:
+
+| expression | weighting calculation | weighting |
+|------------|-----------------------|-----------|
+| $ | $(2) | 2 |
+| $.body | $(2).body(2) | 4 |
+| $.body.item1 | $(2).body(2).item1(2) | 8 |
+| $.body.item2 | $(2).body(2).item2(0) | 0 |
+| $.header.item1 | $(2).header(0).item1(2) | 0 |
+| $.body.item1.level | $(2).body(2).item1(2).level(2) | 16 |
+| $.body.item1.level[1] | $(2).body(2).item1(2).level(2)[1(2)] | 32 |
+| $.body.item1.level[1].id | $(2).body(2).item1(2).level(2)[1(2)].id(2) | 64 |
+| $.body.item1.level[1].name | $(2).body(2).item1(2).level(2)[1(2)].name(0) | 0 |
+| $.body.item1.level[2] | $(2).body(2).item1(2).level(2)[2(0)] | 0 |
+| $.body.item1.level[2].id | $(2).body(2).item1(2).level(2)[2(0)].id(2) | 0 |
+| $.body.item1.level[*].id | $(2).body(2).item1(2).level(2)[*(1)].id(2) | 32 |
+| $.body.\*.level[\*].id | $(2).body(2).*(1).level(2)[*(1)].id(2) | 8 |
+
+So for the item with id 102, the matcher with path `$.body.item1.level[1].id` and weighting 64 will be selected.
+
+#### Supported matchers
+
+The following matchers are supported:
+
+| matcher | example configuration | description |
+|---------|-----------------------|-------------|
+| Equality | `{ "match": "equality" }` | This is the default matcher, and relies on the equals operator |
+| Regex | `{ "match": "regex", "regex": "\\d+" }` | This executes a regular expression match against the string representation of a values. |
+| Type | `{ "match": "type" }` | This executes a type based match against the values, that is, they are equal if they are the same type. |
+| MinType | `{ "match": "type", "min": 2 }` | This executes a type based match against the values, that is, they are equal if they are the same type. In addition, if the values represent a collection, the length of the actual value is compared against the minimum. |
+| MaxType | `{ "match": "type", "max": 10 }` | This executes a type based match against the values, that is, they are equal if they are the same type. In addition, if the values represent a collection, the length of the actual value is compared against the maximum. |
+
+
 ## Example
 
 This is an example of a pact file:
