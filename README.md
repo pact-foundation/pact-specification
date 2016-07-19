@@ -62,6 +62,7 @@ This is an example of a pact file:
   },
   "interactions": [
     {
+      "providerState" : "Good Mallory exists",
       "description": "a retrieve Mallory request",
       "request": {
         "method": "GET",
