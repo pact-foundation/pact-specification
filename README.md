@@ -241,6 +241,20 @@ Example:
 }
 ```
 
+#### Add an include matcher
+
+Simple matcher to determin if a string is present in a value.
+
+Example:
+
+```json
+"matchingRules": {
+  "body": {
+    "$.value": { "matchers": [{"match": "include", "value": "ValueA"}] },
+  }
+}
+```
+
 #### Add more specific type matchers
 
 Type matchers sometimes need to be more specific. Sometimes just matching the type of the example is not enough. Dates
