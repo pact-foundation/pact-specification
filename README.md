@@ -48,6 +48,15 @@ e.g:
 | Javascript | `new Date(Date.parse('Feb 29, 2001')).toString()` | Thu Mar 01 2001 00:00:00 GMT+1100 (AEDT) |
 | Ruby | `Date.strptime('29-02-2001', '%d-%m-%Y')` | invalid date (ArgumentError) |
 
+#### Additional Matchers
+
+The following additional matchers are proposed:
+
+| Matcher | Description | Example JSON |
+| ------- | ----------- | ------------ |
+| ignored | Indicates an optional attribute that should be ignored | `{ "match": "ignore" }` |
+| nullValue | Matches NULL values only. This is used to provide matcher defintions like `or(decimal, nullValue)` | `{ "match": "nullValue" }` |
+| absent | Indicates an attribute that must never be present | `{ "match": "absent" }` |
 
 ### References
 
