@@ -24,7 +24,7 @@ Note: One implications of this philosophy is that you cannot verify, using pact,
 
 ### Goals for implementing a pact library
 * The DSLs should be as similar as possible, within the idioms of the language, to the original Ruby wording to help create a consistent Pact experience, and minimise overhead when switching between languages.
-* The matching logic for the requests and responses should be the same so that we can have the same amount of confidence that the integrations will work in real life not matter what language the system was written and tested in.
+* The matching logic for the requests and responses should be the same so that we can have the same amount of confidence that the integrations will work in real life no matter what language the system was written and tested in.
 
 
 # Index
