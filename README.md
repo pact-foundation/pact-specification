@@ -243,7 +243,7 @@ Example:
 
 #### Add an include matcher
 
-Simple matcher to determin if a string is present in a value.
+Simple matcher to determine if a string is present in a value.
 
 Example:
 
@@ -287,18 +287,40 @@ with a dynamically generated one.
 {
   "body": {
     "id": 100,
+    "description": "Small pack of bolts",
     "processDate": "2015-07-01"
   },
   "generators": {
-    "body": {
-      "$.processDate": {
-        "type": "date",
-        "values": ["today"]
+      "body": {
+          "$.id": {
+              "type": "RandomDecimal",
+              "digits": 5
+          },
+          "$.description": {
+              "type": "RandomString",
+              "size": 20
+          },
+          "$.processDate": {
+              "type": "Date"
+          }
       }
-    }
   }
 }
 ```
+
+Currently supported generators:
+
+| Generator | Attributes | Description | Example JSON |
+| --------- | ---------- | ----------- | ------------ |
+| RandomInt | min, max   | Generates a random integer value between `min` and `max` values | `{ "type": "RandomInt", "min": 0,  "max": 2147483647 }`
+| RandomDecimal | digits  | Generates a random decimal value (BigDecimal) with the provided number of digits | `{ "type": "RandomDecimal", "digits": 6 }`
+| RandomHexadecimal | digits  | Generates a random hexadecimal value (String) with the provided number of digits | `{ "type": "RandomHexadecimal", "digits": 8 }`
+| RandomString | size  | Generates a random string value of the provided size characters | `{ "type": "RandomString", "size": 20 }`
+| Regex | regex  | Generates a random string value from the provided regular expression | `{ "type": "Regex", "regex": "\\d{1,8}" }`
+| Uuid | | Generates a random UUID value | `{ "type": "Uuid" }`
+| Date | format (Optional) | Generates a Date value from the current date either in ISO format or using the provided format string | `{ "type": "Date", "format": "MM/dd/yyyy" }`
+| Time | format (Optional) | Generates a Time value from the current time either in ISO format or using the provided format string | `{ "type": "Time", "format": "HH:mm" }`
+| DateTime | format (Optional) | Generates a Date and Time (timestamp) value from the current date and time either in ISO format or using the provided format string | `{ "type": "DateTime", "format": "yyyy/MM/dd - HH:mm:ss.S" }`
 
 #### Content-Type header matching should include parameters in the matching
 
