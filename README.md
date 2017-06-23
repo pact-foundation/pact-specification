@@ -269,6 +269,7 @@ The following matchers have been added:
 |---------|-------------|---------|
 | Integer | Matches the example by type, and ensures that the actual value is also an integer | `{ "match": "integer" }` |
 | Decimal | Matches the example by type, and ensures that the actual value is also a decimal number (has decimal places) | `{ "match": "decimal" }` |
+| Null | Matches only null values | `{ "match": "null" }` |
 
 #### Introduce example generators
 
@@ -321,6 +322,7 @@ Currently supported generators:
 | Date | format (Optional) | Generates a Date value from the current date either in ISO format or using the provided format string | `{ "type": "Date", "format": "MM/dd/yyyy" }`
 | Time | format (Optional) | Generates a Time value from the current time either in ISO format or using the provided format string | `{ "type": "Time", "format": "HH:mm" }`
 | DateTime | format (Optional) | Generates a Date and Time (timestamp) value from the current date and time either in ISO format or using the provided format string | `{ "type": "DateTime", "format": "yyyy/MM/dd - HH:mm:ss.S" }`
+| Boolean | | Generates a random boolean value | `{ "type": "RandomBoolean" }`
 
 #### Content-Type header matching should include parameters in the matching
 
