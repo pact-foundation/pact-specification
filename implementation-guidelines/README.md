@@ -48,7 +48,20 @@ Please note that you should tag the version before publishing the pact to avoid 
 
 ## Provider
 
+You will need to implement a verification task that calls the `pact-provider-verifier`. It will expose configuration code for the URLs of the pacts that need to be verified (local and HTTP endpoints) and expose configuration options for broker authentication. Run `pact-provider-verifier help verify` to see all configuration options you will need to provide.
 
+```ruby
+Pact.service_provider "Animal Service" do
+
+  honours_pact_with 'Zoo App' do
+    pact_uri '../zoo-app/spec/pacts/zoo_app-animal_service.json'
+  end
+end
+```
+
+Publishing of the verification results will be done automatically by the `pact-provider-verifier` if you set `publish-verification-results` to true and provide a `provider version number`.
+
+For bonus points, you can implement code that retrieves all the pacts for a given provider dynamically from the pact_broker.
 
 [pact-ruby-standalone]: https://github.com/pact-foundation/pact-ruby-standalone
 [dependency-graph]: https://github.com/pact-foundation/README/blob/master/dependency_graph.md
