@@ -188,20 +188,20 @@ Request Example:
 "matchingRules": {
   "path": {
     "matchers": [
-        { "match": "regex", "value": "\\w+" }
+        { "match": "regex", "regex": "\\w+" }
       ]
   },
   "query": {
     "Q1": {
         "matchers": [
-          { "match": "regex", "value": "\\w+" }
+          { "match": "regex", "regex": "\\w+" }
         ]
     }
   },
   "header": {
     "Accept": {
         "matchers": [
-            { "match" : "regex", "value" : "\\w+" }
+            { "match" : "regex", "regex" : "\\w+" }
         ]
     }
   },
