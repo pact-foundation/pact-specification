@@ -209,12 +209,12 @@ The following matchers are supported:
 
 | matcher | example configuration | description |
 |---------|-----------------------|-------------|
-| Equality | `{ "match": "equality" }` | This is the default matcher, and relies on the equals operator |
 | Regex | `{ "match": "regex", "regex": "\\d+" }` | This executes a regular expression match against the string representation of a values. |
 | Type | `{ "match": "type" }` | This executes a type based match against the values, that is, they are equal if they are the same type. |
 | MinType | `{ "match": "type", "min": 2 }` | This executes a type based match against the values, that is, they are equal if they are the same type. In addition, if the values represent a collection, the length of the actual value is compared against the minimum. |
 | MaxType | `{ "match": "type", "max": 10 }` | This executes a type based match against the values, that is, they are equal if they are the same type. In addition, if the values represent a collection, the length of the actual value is compared against the maximum. |
 
+If no matcher is specified an equality matcher will be used, which relies on the equals operator.
 
 ## Example
 
