@@ -58,6 +58,10 @@ The following additional matchers are proposed:
 | nullValue | Matches NULL values only. This is used to provide matcher defintions like `or(decimal, nullValue)` | `{ "match": "nullValue" }` |
 | absent | Indicates an attribute that must never be present | `{ "match": "absent" }` |
 
+### Ignoring the keys in a map
+
+Some payloads may contain a map of IDs to values. In these cases, the keys should be ignored and only the values compared. This can be achieved by defining a new `mapValues` matcher on the map. For reference, see [#47](https://github.com/pact-foundation/pact-specification/issues/47) and [Pact-JVM #313](https://github.com/DiUS/pact-jvm/issues/313).
+
 ### References
 
 * https://groups.google.com/forum/#!topic/pact-support/YHw7hgD1d4g
