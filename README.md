@@ -468,7 +468,7 @@ The expressions will have the following weightings:
 | $.item1.level[2] | $(2).item1(2).level(2)[2(0)] | 0 |
 | $.item1.level[2].id | $(2).item1(2).level(2)[2(0)].id(2) | 0 |
 | $.item1.level[*].id | $(2).item1(2).level(2)[*(1)].id(2) | 16 |
-| $.\*.level[\*].id | $(2).*(1).level(2)[*(1)].id(2) | 8 |
+| $.\*.level[\*].id | $(2).*(1).level(2)[*(1)].id(2) | 16 |
 
 So for the item with id 101, the matcher with path `$.item1.level[1].id` and weighting 32 will be selected.
 
