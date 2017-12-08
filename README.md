@@ -122,7 +122,7 @@ Pact does not support the full JSON path expressions, only ones that match the f
 4. Path elements represent keys.
 5. A star (`*`) can be used to match all keys of a map or all items of an array (one level only).
 
-So the expression `$.body.item1.level[2].id` will match the highlighted item in the following body:
+So the expression `$.body.item1.level[1].id` will match the highlighted item in the following body:
 
 ```js
 {
@@ -132,10 +132,10 @@ So the expression `$.body.item1.level[2].id` will match the highlighted item in 
         "id": 100
       },
       {
-        "id": 101
+        "id": 101 // <---- $.body.item1.level[1].id
       },
       {
-        "id": 102 // <---- $.body.item1.level[2].id
+        "id": 102
       },
       {
         "id": 103
@@ -170,10 +170,10 @@ So for the body with highlighted item:
         "id": 100
       },
       {
-        "id": 101
+        "id": 101 // <--- Item under consideration
       },
       {
-        "id": 102 // <--- Item under consideration
+        "id": 102
       },
       {
         "id": 103
@@ -201,7 +201,7 @@ The expressions will have the following weightings:
 | $.body.item1.level[*].id | $(2).body(2).item1(2).level(2)[*(1)].id(2) | 32 |
 | $.body.\*.level[\*].id | $(2).body(2).*(1).level(2)[*(1)].id(2) | 8 |
 
-So for the item with id 102, the matcher with path `$.body.item1.level[1].id` and weighting 64 will be selected.
+So for the item with id 101, the matcher with path `$.body.item1.level[1].id` and weighting 64 will be selected.
 
 #### Supported matchers
 
