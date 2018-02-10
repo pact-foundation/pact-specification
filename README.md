@@ -117,7 +117,7 @@ matching rules cascade, so a rule can be specified on a value and will apply to 
 Pact does not support the full JSON path expressions, only ones that match the following rules:
 
 1. All paths start with a dollar (`$`), representing the root.
-2. All path elements are separated by periods (`.`), except array indices which use square brackets (`[]`).
+2. All path elements are either separated by periods (`.`) or use the JSON path bracket notation (square brackets and single quotes around the values: e.g. `['x.y']`), except array indices which use square brackets (`[]`). For elements where the value contains white space or non-alphanumeric characters, the JSON path bracket notation (`['']`) should be used.
 3. The second element of the path is the http type that the matcher is applied to (e.g., `$.body` or `$.header`).
 4. Path elements represent keys.
 5. A star (`*`) can be used to match all keys of a map or all items of an array (one level only).
