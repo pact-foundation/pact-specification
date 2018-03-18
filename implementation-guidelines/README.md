@@ -1,6 +1,6 @@
 # Implementation guidelines
 
-Our current approach for implementing pact in a new language is to create a native DSL that calls the a [standalone package][pact-ruby-standalone] of the Ruby implementation via HTTP and command line. This approach is temporary, as we're working on a [Rust implementation](github.com/pact-foundation/pact-reference) that will be able to provide FFI bindings and integrate much more elegantly.
+Our current approach for implementing pact in a new language is to create a native DSL that calls the a [standalone package][pact-ruby-standalone] of the Ruby implementation via HTTP and command line. This approach is temporary, as we're working on a [Rust implementation][rust-pact-reference] that will be able to provide FFI bindings and integrate much more elegantly.
 
 You can see which Pact implementations use the standalone packages in the [Pact Dependency Graph of Doom][dependency-graph].
 
@@ -68,3 +68,4 @@ For bonus points, you can implement code that retrieves all the pacts for a give
 [pact-broker-client]: https://github.com/pact-foundation/pact_broker-client
 [pact-broker-pact-docs]: https://github.com/pact-foundation/pact_broker-client/blob/master/doc/markdown/Pact%20Broker%20Client%20-%20Pact%20Broker.md
 [pact-broker-wiki]: https://github.com/pact-foundation/pact_broker/wiki
+[rust-pact-reference]: https://github.com/pact-foundation/pact-reference
