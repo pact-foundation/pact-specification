@@ -79,7 +79,7 @@ This is an example of a pact file:
     }
   ],
   "metadata": {
-    "pact-specification": {
+    "pactSpecification": {
       "version": "1.0.0"
     },
     "pact-jvm": {
