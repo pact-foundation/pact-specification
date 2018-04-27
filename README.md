@@ -307,7 +307,7 @@ This is an example of a pact file:
         }
     ],
     "metadata": {
-        "pact-specification": {
+        "pactSpecification": {
             "version": "2.0.0"
         },
         "pact-jvm": {
