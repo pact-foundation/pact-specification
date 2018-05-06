@@ -255,6 +255,20 @@ Example:
 }
 ```
 
+#### Add a minmax type matcher
+
+Sometimes it is required to ensure that a collection has both a minimum and maximum size.
+
+Example:
+
+```json
+"matchingRules": {
+  "body": {
+    "$.values": { "matchers": [{"match": "type", "min": "1", "max": "1"}] },
+  }
+}
+```
+
 #### Add more specific type matchers
 
 Type matchers sometimes need to be more specific. Sometimes just matching the type of the example is not enough. Dates
