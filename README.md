@@ -1,10 +1,7 @@
 <img src="https://github.com/pact-foundation/pact-logo/blob/master/media/logo-black.png" width="200">
 
 # How to get started writing a Pact implementation
-1. Read the rest of this file.
-2. Read the [implementation guidelines](/implementation-guidelines/README.md)
-3. Join the [pact-dev](https://groups.google.com/forum/#!forum/pact-dev) Google group and let people know what you'd like to do and find out if someone has already started work on anything similar.
-4. Do it! Ensure your implementation passes all the tests in the testcases directory of the appropriate branch. Start with [version-1](https://github.com/pact-foundation/pact-specification/tree/version-1/testcases) and get that out and battle test it. Then, try for versions 2 and 3.
+1. The easiest way to create a Pact implementation in a new language is to wrap one of the existing implementations that has been packaged as a standalone CLI. Join us on slack.pact.io to have a talk about it if you are interested.
 
 # Introduction
 
