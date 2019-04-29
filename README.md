@@ -654,7 +654,7 @@ This is an example of a pact file:
                         },
                         "$.data.array1": {
                             "matchers": [
-                              { "min": 0, "match": "type" }
+                              { "min": 1, "match": "type" }
                             ]
                         },
                         "$.data.array2": {
