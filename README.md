@@ -693,7 +693,7 @@ This is an example of a pact file:
                         },
                         "$.data.array2[*].address": {
                             "matchers": [
-                              { "regex": "(\\d{1,3}\\.)+\\d{1,3}" }
+                              { "match": "regex", "regex": "(\\d{1,3}\\.)+\\d{1,3}" }
                             ]
                         },
                         "$.data.array1[*].name": {
