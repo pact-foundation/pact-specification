@@ -1,7 +1,8 @@
 <img src="https://github.com/pact-foundation/pact-logo/blob/master/media/logo-black.png" width="200">
 
 # How to get started writing a Pact implementation
-1. The easiest way to create a Pact implementation in a new language is to wrap one of the existing implementations that has been packaged as a standalone CLI. Join us on slack.pact.io to have a talk about it if you are interested.
+
+* All new Pact implementations should wrap the Rust implementation using FFI calls, to allow us to roll out new features quickly and consistently across our 10+ Pact languages. Please do not start writing a new Pact implementation without talking to the current maintainers at slack.pact.io! 
 
 # Introduction
 
