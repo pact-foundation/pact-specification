@@ -83,6 +83,14 @@ HTTP. It contains a request entity with all the HTTP attributes required to cons
 equivalent response. Each request and response also includes optional matching rules and generators. Provider states
 define the state that a provider needs to be in for the interaction to be successfully verified.
 
+Additional fields:
+
+|Field|Type|Description|
+|-----|----|-----------|
+|request|Request|The HTTP request part|
+|response|Response|The HTTP response part|
+|providerStates|List[ProviderState]|Provider states required to verify the interaction|
+
 Example:
 
 ```json
@@ -275,11 +283,23 @@ Represents the response part of a HTTP request.
 |-----|----|-----------|
 |status|number|The HTTP status code (100-599)|
 |headers|Map[string, List[string]]|Response headers|
-|body|Body|Reponse body|
+|body|Body|Response body|
 |matchingRules|MatchingRules|Optional Matching rules to apply to the response|
 |generators|Generators|Optional generators to apply to the response|
 
-##### Provider states
+#### Asynchronous/Messages
+
+Asynchronous messages represent a one-way interaction between a provider and consumer. They were introduced in V3 as
+Message Pacts. Each message interaction has the following additional attributes:
+
+|Field|Type|Description|
+|-----|----|-----------|
+|contents|Body|The body of the message|
+|metadata|Map[string, Any JSON]|Key/value map of metadata associated with the message. Values can be any value that be stored as JSON.|
+|matchingRules|MatchingRules|Optional Matching rules to apply to the message|
+|generators|Generators|Optional generators to apply to the message|
+
+#### Provider states
 
 The provider states store an indicator for the state that the provider needs to be in to be successfully
 verified. They contain a `description` and a key/value map of parameters. The values in the parameters
@@ -307,7 +327,7 @@ can be any value that can be serialised to JSON.
 }
 ```
 
-##### Bodies
+#### Bodies
 
 Request/Response bodies and message contents are represented with an entity with the following attributes:
 
@@ -317,7 +337,7 @@ Request/Response bodies and message contents are represented with an entity with
 |encoded|string or false|If the body has been encoded (for example, with base64), the encoding used. Otherwise false. Note for JSON stored in string form, encoded should be `JSON`.|
 |contents|string or any JSON|If encoded, must be a string value. Otherwise, can be any JSON.|
 
-##### Matching Rules
+#### Matching Rules
 
 The matching rules are stored as a key/value map where the key is the category that matchers are applied to. Categories 
 are string values, but the current supported ones are: body, header, path, query, metadata.
@@ -331,7 +351,7 @@ Each matching rule has the following attributes:
 
 All matching rules must have a `type` attribute, and can have any other attributes depending on the type.
 
-###### Single value matching rules
+##### Single value matching rules
 
 These are used for applying matching rules to singular values. Current only request paths.
 
@@ -345,7 +365,7 @@ These are used for applying matching rules to singular values. Current only requ
 }
 ```
 
-###### Matching rules for collections
+##### Matching rules for collections
 
 Stored as a key/value map, where the key is the name for headers, metadata and query parameters. For bodies, it is
 a JSON Path like expression.
@@ -385,7 +405,7 @@ a JSON Path like expression.
 }
 ```
 
-##### Generators
+#### Generators
 
 The generators, just like matching rules, are stored as a key/value map where the key is the category that generators are applied to. Categories 
 are string values, but the current supported ones are: body, header, path, query, metadata, status.
@@ -396,7 +416,7 @@ are string values, but the current supported ones are: body, header, path, query
 
 All generators must have a `type` attribute, and can have any other attributes depending on the type.
 
-###### Single value generator categories
+##### Single value generator categories
 
 These are used for applying generators to singular values. Current only request paths and response statuses.
 
@@ -409,7 +429,7 @@ These are used for applying generators to singular values. Current only request 
 }
 ```
 
-###### Generators for collections
+##### Generators for collections
 
 Stored as a key/value map, where the key is the name for headers, metadata and query parameters. For bodies, it is
 a JSON Path like expression.
