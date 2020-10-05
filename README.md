@@ -37,6 +37,6 @@ Note: One implications of this philosophy is that you cannot verify, using pact,
 
 * [Version 3](https://github.com/pact-foundation/pact-specification/tree/version-3) - Introduces pact format for message queues and corrects some issues with V2.
 
-* [Version 4](https://github.com/pact-foundation/pact-specification/tree/version-4) - RFC #71.
+* [Version 4](https://github.com/pact-foundation/pact-specification/tree/version-4) - RFC [#71](https://github.com/pact-foundation/pact-specification/issues/71).
 
 [postel]: http://en.wikipedia.org/wiki/Jon_Postel#Postel.27s_Law
