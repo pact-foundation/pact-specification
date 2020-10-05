@@ -79,7 +79,7 @@ For example:
 #### Synchronous/HTTP
 
 This is the original Pact interaction (V1/V2), and represents a synchronous request/response, mainly executed over
-HTTP. It contains a request entity with all the HTTP attributes required to construct an HTTP request, and a 
+HTTP. It contains a request entity with all the HTTP attributes required to construct an HTTP request, and an 
 equivalent response. Each request and response also includes optional matching rules and generators. Provider states
 define the state that a provider needs to be in for the interaction to be successfully verified.
 
@@ -170,7 +170,7 @@ Example:
 }
 ```
 
-Example for a multi-part POST request with an image, which returns a JSON response:
+Example of a multi-part POST request with an image, which returns a JSON response:
 
 ```json
 {
@@ -254,7 +254,184 @@ Example for a multi-part POST request with an image, which returns a JSON respon
 
 ##### Request
 
+Represents the request part of a HTTP request.
+
+|Field|Type|Description|
+|-----|----|-----------|
+|method|string|The HTTP method|
+|path|string|Request path|
+|query|Map[string, List[string]]|Request query string|
+|headers|Map[string, List[string]]|Request headers|
+|body|Body|Request body|
+|body|Body|Request body|
+|matchingRules|MatchingRules|Optional Matching rules to apply to the request|
+|generators|Generators|Optional generators to apply to the request|
+
 ##### Response
+
+Represents the response part of a HTTP request.
+
+|Field|Type|Description|
+|-----|----|-----------|
+|status|number|The HTTP status code (100-599)|
+|headers|Map[string, List[string]]|Response headers|
+|body|Body|Reponse body|
+|matchingRules|MatchingRules|Optional Matching rules to apply to the response|
+|generators|Generators|Optional generators to apply to the response|
+
+##### Provider states
+
+The provider states store an indicator for the state that the provider needs to be in to be successfully
+verified. They contain a `description` and a key/value map of parameters. The values in the parameters
+can be any value that can be serialised to JSON.
+
+|Field|Type|Description|
+|-----|----|-----------|
+|name|string|Provider state name|
+|params|Map[string, Any JSON]|Optional Parameters|
+
+```json
+{
+  "providerStates": [
+    {
+      "name": "a user exists",
+      "params": { 
+        "name": "Testy",
+        "id": 1234 
+      }
+    },
+    {
+      "name": "no administrators exist"
+    }
+  ]
+}
+```
+
+##### Bodies
+
+Request/Response bodies and message contents are represented with an entity with the following attributes:
+
+|Field|Type|Description|
+|-----|----|-----------|
+|contentType|string|The content type of the body from the [IANA registry](https://www.iana.org/assignments/media-types/media-types.xhtml)|
+|encoded|string or false|If the body has been encoded (for example, with base64), the encoding used. Otherwise false. Note for JSON stored in string form, encoded should be `JSON`.|
+|contents|string or any JSON|If encoded, must be a string value. Otherwise, can be any JSON.|
+
+##### Matching Rules
+
+The matching rules are stored as a key/value map where the key is the category that matchers are applied to. Categories 
+are string values, but the current supported ones are: body, header, path, query, metadata.
+
+Each matching rule has the following attributes:
+
+|Field|Type|Description|
+|-----|----|-----------|
+|matchers|List[MatchingRule]|List of matching rules|
+|combine|AND or OR|Optional. Whether the results of applying the matching rules should be combined using an AND or OR operation.|
+
+All matching rules must have a `type` attribute, and can have any other attributes depending on the type.
+
+###### Single value matching rules
+
+These are used for applying matching rules to singular values. Current only request paths.
+
+```json
+{
+  "path": {
+    "matchers": [
+      { "match": "regex", "regex": "\\w+" }
+    ]
+  }
+}
+```
+
+###### Matching rules for collections
+
+Stored as a key/value map, where the key is the name for headers, metadata and query parameters. For bodies, it is
+a JSON Path like expression.
+
+```json
+{
+  "query": {
+    "Q1": {
+      "matchers": [
+        { "match": "regex", "regex": "\\d+" }
+      ]
+    }
+  },
+  "header": {
+    "HEADERY": {
+      "combine": "OR",
+      "matchers": [
+        {"match": "include", "value": "ValueA"},
+        {"match": "include", "value": "ValueB"}
+      ]
+    }
+  },
+  "body": {
+    "$.animals": {
+      "matchers": [{"min": 1, "match": "type"}]
+    },
+    "$.animals[*].*": {
+      "matchers": [{"match": "type"}]
+    },
+    "$.animals[*].children": {
+      "matchers": [{"min": 1}]
+    },
+    "$.animals[*].children[*].*": {
+      "matchers": [{"match": "type"}]
+    }
+  }
+}
+```
+
+##### Generators
+
+The generators, just like matching rules, are stored as a key/value map where the key is the category that generators are applied to. Categories 
+are string values, but the current supported ones are: body, header, path, query, metadata, status.
+
+|Field|Type|Description|
+|-----|----|-----------|
+|generators|Map[string, Generator]|Map of categories to generators|
+
+All generators must have a `type` attribute, and can have any other attributes depending on the type.
+
+###### Single value generator categories
+
+These are used for applying generators to singular values. Current only request paths and response statuses.
+
+```json
+{
+  "generators": {
+    "status": {"max": 299, "min": 200, "type": "RandomInt"},
+    "path": {"regex": "\\d+", "type": "Regex"}
+  }
+}
+```
+
+###### Generators for collections
+
+Stored as a key/value map, where the key is the name for headers, metadata and query parameters. For bodies, it is
+a JSON Path like expression.
+
+```json
+{
+  "generators": {
+    "body": {
+        "$.1": {"digits": 4, "type": "RandomDecimal"},
+        "$.2": {"digits": 4, "type": "RandomDecimal"}
+    },
+    "header": {
+        "A": {"digits": 4, "type": "RandomDecimal"},
+        "B": {"digits": 4, "type": "RandomDecimal"}
+    },
+    "query": {
+        "a": {"digits": 4, "type": "RandomDecimal"},
+        "b": {"digits": 4, "type": "RandomDecimal"}
+    }
+  }
+}
+```
 
 ### Metadata
 
