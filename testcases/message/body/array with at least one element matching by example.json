@@ -2,33 +2,51 @@
   "match": true,
   "comment": "Types and regular expressions match",
   "expected": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "animals": [
-        {
-          "name" : "Fred"
-        }
-      ]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "animals": [
+          {
+            "name": "Fred"
+          }
+        ]
+      }
     },
     "matchingRules": {
-      "$.body.animals": {"min": 1, "match": "type"},
-      "$.body.animals[*].*": {"match": "type"}
+      "body": {
+        "$.animals": {
+          "matchers": [
+            {
+              "min": 1,
+              "match": "type"
+            }
+          ]
+        },
+        "$.animals[*].*": {
+          "matchers": [
+            {
+              "match": "type"
+            }
+          ]
+        }
+      }
     }
   },
   "actual": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "animals": [
-        {
-          "name" : "Mary"
-        },{
-          "name" : "Susan"
-        }
-      ]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "animals": [
+          {
+            "name": "Mary"
+          },
+          {
+            "name": "Susan"
+          }
+        ]
+      }
     }
   }
 }

@@ -4,27 +4,45 @@
   "expected": {
     "headers": {},
     "body" : {
-      "myDates": [
-        10
-      ]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "myDates": [
+          10
+        ]
+      }
     },
     "matchingRules" : {
-      "$.body.myDates" : {
-        "match": "type"
-      },
-      "$.body.myDates[*]" : {
-        "match": "type"
+      "body": {
+        "$.myDates": {
+          "matchers": [
+            {
+              "match": "type"
+            }
+          ]
+        },
+        "$.myDates[*]": {
+          "matchers": [
+            {
+              "match": "type"
+            }
+          ]
+        }
       }
     }
   },
   "actual": {
     "headers": {},
     "body": {
-      "myDates": [
-        20,
-        5,
-        1910
-      ]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "myDates": [
+          20,
+          5,
+          1910
+        ]
+      }
     }    
   }
-}   
+}

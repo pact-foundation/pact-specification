@@ -4,14 +4,18 @@
   "expected" : {
     "method": "POST",
     "path": "/",
-    "query": "",
-    "body": ""
+    "query": {},
+    "body": {
+      "content": ""
+    }
   },
   "actual": {
     "method": "POST",
     "path": "/",
-    "query": "",
+    "query": {},
     "headers": {"Content-Type": "application/json"},
-    "body": ""
+    "body": {
+      "content": ""
+    }
   }
 }

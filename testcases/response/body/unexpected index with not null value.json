@@ -4,16 +4,31 @@
   "expected" : {
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "favouriteColours": ["red","blue"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "favouriteColours": [
+            "red",
+            "blue"
+          ]
+        }
       }
     }
   },
   "actual": {
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "favouriteColours": ["red","blue","taupe"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "favouriteColours": [
+            "red",
+            "blue",
+            "taupe"
+          ]
+        }
       }
     }
   }

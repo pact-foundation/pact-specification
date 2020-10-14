@@ -2,22 +2,24 @@
   "match": false,
   "comment": "Number of feet expected to be string but was number",
   "expected": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "alligator":{
-        "feet": "4"
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "feet": "4"
+        }
       }
     }
   },
   "actual": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "alligator":{
-        "feet": 4
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "feet": 4
+        }
       }
     }
   }

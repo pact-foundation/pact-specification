@@ -4,16 +4,24 @@
   "expected" : {
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "feet": "4"
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "feet": "4"
+        }
       }
     }
   },
   "actual": {
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "feet": 4
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "feet": 4
+        }
       }
     }
   }

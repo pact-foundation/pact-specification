@@ -4,12 +4,12 @@
   "expected" : {
     "method": "POST",
     "path": "/",
-    "query": "",
+    "query": {},
     "body": null
   },
   "actual": {
     "method": "POST",
     "path": "/",
-    "query": ""
+    "query": {}
   }
 }

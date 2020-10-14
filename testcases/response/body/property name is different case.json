@@ -4,16 +4,24 @@
   "expected" : {
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "FavouriteColour": "red"
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "FavouriteColour": "red"
+        }
       }
     }
   },
   "actual": {
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "favouritecolour": "red"
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "favouritecolour": "red"
+        }
       }
     }
   }

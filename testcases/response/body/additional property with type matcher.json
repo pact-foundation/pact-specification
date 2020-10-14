@@ -4,25 +4,38 @@
   "expected": {
     "headers": {},
     "body" : {
-      "myPerson": {
-        "name": "Any name",
-        "age": 10
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "myPerson": {
+          "name": "Any name"
+        }
       }
     },
     "matchingRules" : {
-      "$.body.myPerson.*" : {
-        "match": "type"
+      "body": {
+        "$.myPerson.*": {
+          "matchers": [
+            {
+              "match": "type"
+            }
+          ]
+        }
       }
     }
   },
   "actual": {
     "headers": {},
     "body": {
-      "myPerson": {
-        "name": "Jon Peterson",
-        "age": 39,
-        "nationality": "Australian"
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "myPerson": {
+          "name": "Jon Peterson",
+          "age": "39",
+          "nationality": "Australian"
+        }
       }
     }    
   }
-}   
+}

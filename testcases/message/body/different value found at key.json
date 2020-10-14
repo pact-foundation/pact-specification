@@ -2,22 +2,24 @@
   "match": false,
   "comment": "Incorrect value at alligator name",
   "expected": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "alligator":{
-        "name": "Mary"
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "name": "Mary"
+        }
       }
     }
   },
   "actual": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "alligator":{
-        "name": "Fred"
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "name": "Fred"
+        }
       }
     }
   }

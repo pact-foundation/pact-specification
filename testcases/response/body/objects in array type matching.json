@@ -3,31 +3,51 @@
   "comment": "objects in array type matching",
   "expected": {
     "headers": {},
-    "body": [{
-      "name": "John Smith",
-      "age": 50
-    }],
+    "body": {
+      "contentType": "application/json",
+      "encoded": false,
+      "content": [
+        {
+          "name": "John Smith",
+          "age": 50
+        }
+      ]
+    },
     "matchingRules": {
-      "$.body": {
-        "match": "type"
-      },
-      "$.body[*]": {
-        "match": "type"
-      },
-      "$.body[*].*": {
-        "match": "type"
+      "body": {
+        "$": {
+          "matchers": [
+            {
+              "match": "type"
+            }
+          ]
+        },
+        "$[*]": {
+          "matchers": [
+            {
+              "match": "type"
+            }
+          ]
+        }
       }
     }
   },
   "actual": {
     "headers": {},
-    "body": [{
-      "name": "Peter Peterson",
-      "age": 22,
-      "gender": "Male"
-    }, {
-      "name": "John Johnston",
-      "age": 64
-    }]
+    "body": {
+      "contentType": "application/json",
+      "encoded": false,
+      "content": [
+        {
+          "name": "Peter Peterson",
+          "age": 22,
+          "gender": "Male"
+        },
+        {
+          "name": "John Johnston",
+          "age": 64
+        }
+      ]
+    }
   }
 }

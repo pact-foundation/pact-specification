@@ -7,15 +7,45 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "matchingRules": {
-      "$.body.alligator.name": {"match": "regex", "regex": "\\w+"},
-      "$.body.alligator.favouriteColours[0]": {"match": "regex", "regex": "red|blue"},
-      "$.body.alligator.favouriteColours[1]": {"match": "regex", "regex": "red|blue"}
+      "body": {
+        "$.alligator.name": {
+          "matchers": [
+            {
+              "match": "regex",
+              "regex": "\\w+"
+            }
+          ]
+        },
+        "$.alligator.favouriteColours[0]": {
+          "matchers": [
+            {
+              "match": "regex",
+              "regex": "red|blue"
+            }
+          ]
+        },
+        "$.alligator.favouriteColours[1]": {
+          "matchers": [
+            {
+              "match": "regex",
+              "regex": "red|blue"
+            }
+          ]
+        }
+      }
     },
     "body": {
-      "alligator":{
-        "name": "Mary",
-        "feet": 4,
-        "favouriteColours": ["red","blue"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "name": "Mary",
+          "feet": 4,
+          "favouriteColours": [
+            "red",
+            "blue"
+          ]
+        }
       }
     }
   },
@@ -25,10 +55,17 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "feet": 4,
-        "name": "Harry",
-        "favouriteColours": ["blue", "red"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "feet": 4,
+          "name": "Harry",
+          "favouriteColours": [
+            "blue",
+            "red"
+          ]
+        }
       }
     }
   }

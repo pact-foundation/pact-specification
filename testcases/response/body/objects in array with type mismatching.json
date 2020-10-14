@@ -3,16 +3,32 @@
   "comment": "objects in array with type mismatching",
   "expected": {
     "headers": {},
-    "body": [{
-      "Name": "John Smith",
-      "Age": 50
-    }],
+    "body": {
+      "contentType": "application/json",
+      "encoded": false,
+      "content": [
+        {
+          "Name": "John Smith",
+          "Age": 50
+        }
+      ]
+    },
     "matchingRules": {
-      "$.body[*]": {
-        "match": "type"
-      },
-      "$.body[*].*": {
-        "match": "type"
+      "body": {
+        "$[*]": {
+          "matchers": [
+            {
+              "match": "type"
+            }
+          ]
+        },
+        "$[*].*": {
+          "matchers": [
+            {
+              "match": "type"
+            }
+          ]
+        }
       }
     }
   },

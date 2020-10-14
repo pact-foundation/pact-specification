@@ -7,14 +7,35 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "matchingRules": {
-      "$.body.alligator.name": {"match": "type"},
-      "$.body.alligator.feet": {"match": "type"}
+      "body": {
+        "$.alligator.name": {
+          "matchers": [
+            {
+              "match": "type"
+            }
+          ]
+        },
+        "$.alligator.feet": {
+          "matchers": [
+            {
+              "match": "type"
+            }
+          ]
+        }
+      }
     },
     "body": {
-      "alligator":{
-        "name": "Mary",
-        "feet": 4,
-        "favouriteColours": ["red","blue"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "name": "Mary",
+          "feet": 4,
+          "favouriteColours": [
+            "red",
+            "blue"
+          ]
+        }
       }
     }
   },
@@ -24,10 +45,17 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "feet": 5,
-        "name": "Harry the very hungry alligator with an extra foot",
-        "favouriteColours": ["red","blue"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "feet": 5,
+          "name": "Harry the very hungry alligator with an extra foot",
+          "favouriteColours": [
+            "red",
+            "blue"
+          ]
+        }
       }
     }
   }

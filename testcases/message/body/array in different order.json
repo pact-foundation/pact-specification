@@ -2,22 +2,30 @@
   "match": false,
   "comment": "Favourite colours in wrong order",
   "expected": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "alligator":{
-        "favouriteColours": ["red","blue"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "favouriteColours": [
+            "red",
+            "blue"
+          ]
+        }
       }
     }
   },
   "actual": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "alligator":{
-        "favouriteColours": ["blue", "red"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "favouriteColours": [
+            "blue",
+            "red"
+          ]
+        }
       }
     }
   }

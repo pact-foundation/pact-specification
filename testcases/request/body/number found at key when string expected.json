@@ -7,8 +7,12 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "feet": "4"
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "feet": "4"
+        }
       }
     }
   },
@@ -18,8 +22,12 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "feet": 4
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "feet": 4
+        }
       }
     }
   }

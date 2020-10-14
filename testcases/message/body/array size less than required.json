@@ -2,26 +2,37 @@
   "match": false,
   "comment": "Empty array",
   "expected": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "animals": [
-        {
-          "name" : "Fred"
-        }
-      ]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "animals": [
+          {
+            "name": "Fred"
+          }
+        ]
+      }
     },
     "matchingRules": {
-      "$.body.animals": {"min": 1}
+      "body": {
+        "$.animals": {
+          "matchers": [
+            {
+              "min": 1,
+              "match": "type"
+            }
+          ]
+        }
+      }
     }
   },
   "actual": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "animals": []
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "animals": []
+      }
     }
   }
 }

@@ -2,22 +2,32 @@
   "match": false,
   "comment": "Favourite colours expected to be strings found a number",
   "expected": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "alligator":{
-        "favouriteNumbers": ["1","2","3"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "favouriteNumbers": [
+            "1",
+            "2",
+            "3"
+          ]
+        }
       }
     }
   },
   "actual": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "alligator":{
-        "favouriteNumbers": ["1",2,"3"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "favouriteNumbers": [
+            "1",
+            2,
+            "3"
+          ]
+        }
       }
     }
   }

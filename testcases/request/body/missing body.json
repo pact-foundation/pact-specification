@@ -4,17 +4,21 @@
   "expected" : {
     "method": "POST",
     "path": "/",
-    "query": "",
+    "query": {},
     "headers": {"Content-Type": "application/json"}
   },
   "actual": {
     "method": "POST",
     "path": "/",
-    "query": "",
+    "query": {},
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator": {
-        "age": 3
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "age": 3
+        }
       }
     }
   }

@@ -7,8 +7,12 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "name": "Mary"
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "name": "Mary"
+        }
       }
     }
   },
@@ -18,8 +22,12 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "name": "Fred"
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "name": "Fred"
+        }
       }
     }
   }

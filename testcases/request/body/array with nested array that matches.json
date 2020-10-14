@@ -7,22 +7,54 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "matchingRules": {
-      "$.body.animals": {"min": 1, "match": "type"},
-      "$.body.animals[*].*": {"match": "type"},
-      "$.body.animals[*].children": {"min": 1, "match": "type"},
-      "$.body.animals[*].children[*].*": {"match": "type"}
-    },
-    "body": {
-      "animals": [
-        {
-          "name" : "Fred",
-          "children": [
+      "body": {
+        "$.animals": {
+          "matchers": [
             {
-              "age": 9
+              "min": 1,
+              "match": "type"
+            }
+          ]
+        },
+        "$.animals[*].*": {
+          "matchers": [
+            {
+              "match": "type"
+            }
+          ]
+        },
+        "$.animals[*].children": {
+          "matchers": [
+            {
+              "min": 1,
+              "match": "type"
+            }
+          ]
+        },
+        "$.animals[*].children[*].*": {
+          "matchers": [
+            {
+              "match": "type"
             }
           ]
         }
-      ]
+      }
+    },
+    "body": {
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "animals": [
+          {
+            "name": "Fred",
+            "children": [
+              {
+                "age": 9
+              }
+            ]
+          }
+        ]
+      }
     }
   },
   "actual": {
@@ -31,21 +63,34 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "animals": [
-        {
-          "name" : "Mary",
-          "children": [
-            {"age": 3},
-            {"age": 5},
-            {"age": 5456}
-          ]
-        },{
-          "name" : "Jo",
-          "children": [
-            {"age": 0}
-          ]
-        }
-      ]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "animals": [
+          {
+            "name": "Mary",
+            "children": [
+              {
+                "age": 3
+              },
+              {
+                "age": 5
+              },
+              {
+                "age": 5456
+              }
+            ]
+          },
+          {
+            "name": "Jo",
+            "children": [
+              {
+                "age": 0
+              }
+            ]
+          }
+        ]
+      }
     }
   }
 }

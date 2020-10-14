@@ -11,6 +11,10 @@
     "path": "/",
     "query": {},
     "headers": {"Content-Type": "application/xml"},
-    "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><alligator name=\"Mary\"/>"
+    "body": {
+      "contentType": "application/xml",
+      "encoded": false,
+      "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><alligator name=\"Mary\"/>"
+    }
   }
 }

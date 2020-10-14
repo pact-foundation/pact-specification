@@ -4,16 +4,24 @@
   "expected" : {
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "name": "Mary"
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "name": "Mary"
+        }
       }
     }
   },
   "actual": {
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "name": null
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "name": null
+        }
       }
     }
   }

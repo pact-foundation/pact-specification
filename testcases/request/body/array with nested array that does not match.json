@@ -7,22 +7,53 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "matchingRules": {
-      "$.body.animals": {"min": 1, "match": "type"},
-      "$.body.animals[*].*": {"match": "type"},
-      "$.body.animals[*].children": {"min": 1},
-      "$.body.animals[*].children[*].*": {"match": "type"}
-    },
-    "body": {
-      "animals": [
-        {
-          "name" : "Fred",
-          "children": [
+      "body": {
+        "$.animals": {
+          "matchers": [
             {
-              "age": 9
+              "min": 1,
+              "match": "type"
+            }
+          ]
+        },
+        "$.animals[*].*": {
+          "matchers": [
+            {
+              "match": "type"
+            }
+          ]
+        },
+        "$.animals[*].children": {
+          "matchers": [
+            {
+              "min": 1
+            }
+          ]
+        },
+        "$.animals[*].children[*].*": {
+          "matchers": [
+            {
+              "match": "type"
             }
           ]
         }
-      ]
+      }
+    },
+    "body": {
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "animals": [
+          {
+            "name": "Fred",
+            "children": [
+              {
+                "age": 9
+              }
+            ]
+          }
+        ]
+      }
     }
   },
   "actual": {
@@ -31,12 +62,20 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "animals": [
-        {
-          "name" : "Mary",
-          "children": [{"age": "9"}]
-        }
-      ]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "animals": [
+          {
+            "name": "Mary",
+            "children": [
+              {
+                "age": "9"
+              }
+            ]
+          }
+        ]
+      }
     }
   }
 }

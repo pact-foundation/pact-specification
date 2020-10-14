@@ -7,15 +7,32 @@
     "query": {},
     "headers": {"Content-Type": "application/xml"},
     "matchingRules": {
-      "$.body['two']['@str']": {"match": "regex", "regex": "\\w+"}
+      "body": {
+        "$['two']['@str']": {
+          "matchers": [
+            {
+              "match": "regex",
+              "regex": "\\w+"
+            }
+          ]
+        }
+      }
     },
-    "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><two str=\"jildrdmxddnVzcQZfjCA\"/>"
+    "body": {
+      "contentType": "application/xml",
+      "encoded": false,
+      "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><two str=\"jildrdmxddnVzcQZfjCA\"/>"
+    }
   },
   "actual": {
     "method": "POST",
     "path": "/",
     "query": {},
     "headers": {"Content-Type": "application/xml"},
-    "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><two str=\"saldfhksajdhffdskkjh\"/>"
+    "body": {
+      "contentType": "application/xml",
+      "encoded": false,
+      "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><two str=\"saldfhksajdhffdskkjh\"/>"
+    }
   }
 }

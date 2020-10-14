@@ -2,22 +2,31 @@
   "match": false,
   "comment": "Unexpected favourite colour",
   "expected": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "alligator":{
-        "favouriteColours": ["red","blue"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "favouriteColours": [
+            "red",
+            "blue"
+          ]
+        }
       }
     }
   },
   "actual": {
-    "metaData": {
-      "contentType": "application/json"
-    },
     "contents": {
-      "alligator":{
-        "favouriteColours": ["red","blue","taupe"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "favouriteColours": [
+            "red",
+            "blue",
+            "taupe"
+          ]
+        }
       }
     }
   }

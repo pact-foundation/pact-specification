@@ -7,8 +7,15 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "favouriteColours": ["red","blue"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "favouriteColours": [
+            "red",
+            "blue"
+          ]
+        }
       }
     }
   },
@@ -18,8 +25,15 @@
     "query": {},
     "headers": {"Content-Type": "application/json"},
     "body": {
-      "alligator":{
-        "favouriteColours": ["red","taupe"]
+      "contentType": "application/json",
+      "encoded": false,
+      "content": {
+        "alligator": {
+          "favouriteColours": [
+            "red",
+            "taupe"
+          ]
+        }
       }
     }
   }

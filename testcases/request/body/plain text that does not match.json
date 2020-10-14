@@ -6,13 +6,21 @@
     "path": "/",
     "query": {},
     "headers": { "Content-Type": "text/plain" },
-    "body": "alligator named mary"
+    "body": {
+      "contentType": "text/plain",
+      "encoded": false,
+      "content": "alligator named mary"
+    }
   },
   "actual": {
     "method": "POST",
     "path": "/",
     "query": {},
     "headers": { "Content-Type": "text/plain" },
-    "body": "alligator named fred"
+    "body": {
+      "contentType": "text/plain",
+      "encoded": false,
+      "content": "alligator named fred"
+    }
   }
 }
