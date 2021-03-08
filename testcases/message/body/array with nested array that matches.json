@@ -19,7 +19,7 @@
       }
     },
     "matchingRules": {
-      "body": {
+      "content": {
         "$.animals": {
           "matchers": [
             {

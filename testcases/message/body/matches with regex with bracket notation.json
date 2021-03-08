@@ -12,7 +12,7 @@
       }
     },
     "matchingRules": {
-      "body": {
+      "content": {
         "$['2'].str": {
           "matchers": [
             {
