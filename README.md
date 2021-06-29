@@ -24,6 +24,17 @@ Note: One implications of this philosophy is that you cannot verify, using pact,
 * The DSLs should be as similar as possible, within the idioms of the language, to the original Ruby wording to help create a consistent Pact experience, and minimise overhead when switching between languages.
 * The matching logic for the requests and responses should be the same so that we can have the same amount of confidence that the integrations will work in real life no matter what language the system was written and tested in.
 
+#### Logging in a pact library
+
+Since some pact implementations call others, it's helpful to have guidelines for the log levels.
+
+* `Error`: Something has gone wrong or there were test failures
+* `Warn`: We think you may be using something incorrectly, or you’ve turned off some safety switches.
+* `Info`: You probably want to know this every time you run pact, and if tests are failing here is an explanation
+* `Debug`: Information to help users know exactly what is happening during their tests (eg if they want to debug a failing test)
+* `Trace`: Very detailled information to help maintainers debug pact
+
+The default log level (if any) should be info.
 
 # Index
 
