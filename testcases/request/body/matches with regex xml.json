@@ -16,7 +16,7 @@
             }
           ]
         },
-        "$.alligator.favouriteColours.favouriteColour.#text": {
+        "$.alligator.favouriteColours.favouriteColour": {
           "matchers": [
             {
               "match": "regex",
