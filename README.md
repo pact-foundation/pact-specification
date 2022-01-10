@@ -20,9 +20,9 @@ a warning should be displayed to indicate that this behaviour has occurred.
 
 This stores details about the consumer of the interaction.
 
-|Field|Type|Description|
-|-----|----|-----------|
-|name|string|the consumer name|
+| Field | Type   | Description       |
+|-------|--------|-------------------|
+| name  | string | the consumer name |
 
 ```json
 {
@@ -36,9 +36,9 @@ This stores details about the consumer of the interaction.
 
 This stores details about the provider of the interaction.
 
-|Field|Type|Description|
-|-----|----|-----------|
-|name|string|the provider name|
+| Field | Type   | Description       |
+|-------|--------|-------------------|
+| name  | string | the provider name |
 
 ```json
 {
@@ -538,7 +538,7 @@ All matching rules must have a `type` attribute, and can have any other attribut
 
 ##### Single value matching rules
 
-These are used for applying matching rules to singular values. Current only request paths.
+These are used for applying matching rules to singular values. Current only for request path and response status.
 
 ```json
 {
@@ -590,6 +590,34 @@ a JSON Path like expression.
 }
 ```
 
+##### Supported matching rules
+
+| matcher       | Spec Version | example configuration                                                                                      | description                                                                                                                                                                                                                            |
+|---------------|--------------|------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Equality      | V1           | `{ "match": "equality" }`                                                                                  | This is the default matcher, and relies on the equals operator                                                                                                                                                                         |
+| Regex         | V2           | `{ "match": "regex", "regex": "\\d+" }`                                                                    | This executes a regular expression match against the string representation of a values.                                                                                                                                                |
+| Type          | V2           | `{ "match": "type" }`                                                                                      | This executes a type based match against the values, that is, they are equal if they are the same type.                                                                                                                                |
+| MinType       | V2           | `{ "match": "type", "min": 2 }`                                                                            | This executes a type based match against the values, that is, they are equal if they are the same type. In addition, if the values represent a collection, the length of the actual value is compared against the minimum.             |
+| MaxType       | V2           | `{ "match": "type", "max": 10 }`                                                                           | This executes a type based match against the values, that is, they are equal if they are the same type. In addition, if the values represent a collection, the length of the actual value is compared against the maximum.             |
+| MinMaxType    | V2           | `{ "match": "type", "max": 10, "min": 2 }`                                                                 | This executes a type based match against the values, that is, they are equal if they are the same type. In addition, if the values represent a collection, the length of the actual value is compared against the minimum and maximum. |
+| Include       | V3           | `{ "match": "include", "value": "substr" }`                                                                | This checks if the string representation of a value contains the substring.                                                                                                                                                            |
+| Integer       | V3           | `{ "match": "integer" }`                                                                                   | This checks if the type of the value is an integer.                                                                                                                                                                                    |
+| Decimal       | V3           | `{ "match": "decimal" }`                                                                                   | This checks if the type of the value is a number with decimal places.                                                                                                                                                                  |
+| Number        | V3           | `{ "match": "number" }`                                                                                    | This checks if the type of the value is a number.                                                                                                                                                                                      |
+| Timestamp     | V3           | `{ "match": "datetime", "format": "yyyy-MM-dd HH:ss:mm" }`                                                 | Matches the string representation of a value against the datetime format                                                                                                                                                               |
+| Time          | V3           | `{ "match": "time", "format": "HH:ss:mm" }`                                                                | Matches the string representation of a value against the time format                                                                                                                                                                   |
+| Date          | V3           | `{ "match": "date", "format": "yyyy-MM-dd" }`                                                              | Matches the string representation of a value against the date format                                                                                                                                                                   |
+| Null          | V3           | `{ "match": "null" }`                                                                                      | Match if the value is a null value (this is content specific, for JSON will match a JSON null)                                                                                                                                         |
+| Boolean       | V3           | `{ "match": "boolean" }`                                                                                   | Match if the value is a boolean value (booleans and the string values `true` and `false`)                                                                                                                                              |
+| ContentType   | V3           | `{ "match": "contentType", "value": "image/jpeg" }`                                                        | Match binary data by its content type (magic file check)                                                                                                                                                                               |
+| Values        | V3           | `{ "match": "values" }`                                                                                    | Match the values in a map, ignoring the keys                                                                                                                                                                                           |
+| ArrayContains | V4           | `{ "match": "arrayContains", "variants": [...] }`                                                          | Checks if all the variants are present in an array.                                                                                                                                                                                    |
+| StatusCode    | V4           | `{ "match": "statusCode", "status": "success" }`                                                           | Matches the response status code.                                                                                                                                                                                                      |
+| NotEmpty      | V4           | `{ "match": "notEmpty" }`                                                                                  | Value must be present and not empty (not null or the empty string)                                                                                                                                                                     |
+| Semver        | V4           | `{ "match": "semver" }`                                                                                    | Value must be valid based on the semver specification                                                                                                                                                                                  |
+| EachKey       | V4           | `{ "match": "eachKey", "rules": [{"match": "regex", "regex": "\\$(\\.\\w+)+"}], "value": "$.test.one" }`   | Allows defining matching rules to apply to the keys in a map                                                                                                                                                                           |
+| EachValue     | V4           | `{ "match": "eachValue", "rules": [{"match": "regex", "regex": "\\$(\\.\\w+)+"}], "value": "$.test.one" }` | Allows defining matching rules to apply to the values in a collection. For maps, delgates to the Values matcher.                                                                                                                       |
+
 #### Generators
 
 The generators, just like matching rules, are stored as a key/value map where the key is the category that generators are applied to. Categories 
@@ -637,6 +665,23 @@ a JSON Path like expression.
   }
 }
 ```
+
+##### Supported generators
+
+| matcher                | Spec Version | example configuration                                                                                        | description                                                                                                                                                                                                                                                                                             |
+|------------------------|--------------|--------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| RandomInt              | V3           | `{"max": 299, "min": 200, "type": "RandomInt"}`                                                              | Generates a random integer between the min and max values (inclusive)                                                                                                                                                                                                                                   |
+| RandomDecimal          | V3           | `{"digits": 8, "type": "RandomDecimal"}`                                                                     | Generates a random big decimal value with the provided number of digits                                                                                                                                                                                                                                 |
+| RandomHexadecimal      | V3           | `{"digits": 8, "type": "RandomHexadecimal"}`                                                                 | Generates a random hexadecimal value of the given number of digits                                                                                                                                                                                                                                      |
+| RandomString           | V3           | `{"size": 20, "type": "RandomString"}`                                                                       | Generates a random alphanumeric string of the provided length                                                                                                                                                                                                                                           |
+| Regex                  | V3           | `{"regex": "\\d+", "type": "Regex"}`                                                                         | Generates a random string from the provided regular expression                                                                                                                                                                                                                                          |
+| Uuid                   | V3/V4        | `{"format": "simple", "type": "Uuid"}`                                                                       | Generates a random UUID. V4 supports specifying the format: simple (e.g 936DA01f9abd4d9d80c702af85c822a8), lower-case-hyphenated (e.g 936da01f-9abd-4d9d-80c7-02af85c822a8), upper-case-hyphenated (e.g 936DA01F-9ABD-4D9D-80C7-02AF85C822A8), URN (e.g. urn:uuid:936da01f-9abd-4d9d-80c7-02af85c822a8) | 
+| Date                   | V3           | `{"format": "yyyy-MM-dd", "type": "Date"}`                                                                   | Generates a date value for the provided format. If no format is provided, ISO date format is used. If an expression is given, it will be evaluated to generate the date, otherwise 'today' will be used                                                                                                 | 
+| Time                   | V3           | `{"format": "HH:mm::ss", "type": "Date"}`                                                                    | Generates a time value for the provided format. If no format is provided, ISO time format is used. If an expression is given, it will be evaluated to generate the time, otherwise 'now' will be used                                                                                                   | 
+| DateTime               | V3           | `{"format": "YYYY-mm-DD'T'HH:mm:ss", "type": "DateTime"}`                                                    | Generates a datetime value for the provided format. If no format is provided, ISO format is used. If an expression is given, it will be evaluated to generate the datetime, otherwise 'now' will be used                                                                                                | 
+| RandomBoolean          | V3           | `{"type": "RandomBoolean"}`                                                                                  | Generates a random boolean value                                                                                                                                                                                                                                                                        | 
+| ProviderStateGenerator | V3           | `{"expression": "/api/user/${id}", type": "ProviderStateGenerator"}`                                         | Generates a value that is looked up from the provider state context using the given expression                                                                                                                                                                                                          | 
+| MockServerURL          | V3           | `{"regex": ".*\\/(orders\\/\\d+)$", "example": "http://localhost:1234/orders/5678", type": "MockServerURL"}` | Generates a URL with the mock server as the base URL.                                                                                                                                                                                                                                                   |
 
 #### Interaction Markup
 
