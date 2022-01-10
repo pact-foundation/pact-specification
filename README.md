@@ -638,6 +638,26 @@ a JSON Path like expression.
 }
 ```
 
+#### Interaction Markup
+
+To support data formats that may be added by third-party plugins, interaction markup entity allows markup to be
+provided to support rendering the format in UIs. HTML and Common Mark are supported. 
+
+It has the following attributes:
+
+| Field      | Type   | Description                                         |
+|------------|--------|-----------------------------------------------------|
+| markup     | string | The markup for the interaction in string format     |
+| markupType | string | The type of markup. Must be `COMMON_MARK` or `HTML` |
+
+Example:
+```json
+{
+  "markup": "```protobuf\nmessage InitPluginRequest {\n    string implementation = 1;\n    string version = 2;\n}\n```\n```protobuf\nmessage InitPluginResponse {\n    message .io.pact.plugin.CatalogueEntry catalogue = 1;\n}\n```\n",
+  "markupType": "COMMON_MARK"
+}
+```
+
 ### Metadata
 
 This stores the metadata associated with the pact file. It is a key/value map, and may contain any data
