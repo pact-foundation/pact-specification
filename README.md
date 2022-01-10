@@ -683,6 +683,29 @@ a JSON Path like expression.
 | ProviderStateGenerator | V3           | `{"expression": "/api/user/${id}", type": "ProviderStateGenerator"}`                                         | Generates a value that is looked up from the provider state context using the given expression                                                                                                                                                                                                          | 
 | MockServerURL          | V3           | `{"regex": ".*\\/(orders\\/\\d+)$", "example": "http://localhost:1234/orders/5678", type": "MockServerURL"}` | Generates a URL with the mock server as the base URL.                                                                                                                                                                                                                                                   |
 
+#### Comments
+
+The comment attribute provides a key-value map (Map[string, JSON]) to store associated comments in the Pact file. 
+An example use of this is to store the name of the test that generated the pact. See issue #45 for more details.
+
+| Key      | Description                                                      |
+|----------|------------------------------------------------------------------|
+| testname | Stores the name of the test that ran and generated the Pact file |
+| text     | List of free-form text comments to display                       | 
+
+Example:
+
+```json
+{
+    "testname": "runTest(au.com.dius.pact.consumer.junit.v4.V4HttpPactTest)",
+    "text": [
+      "This is a comment",
+      "Another comment",
+      "This is also a comment"
+    ]
+}
+```
+
 #### Interaction Markup
 
 To support data formats that may be added by third-party plugins, interaction markup entity allows markup to be
