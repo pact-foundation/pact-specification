@@ -1,6 +1,7 @@
-# Version 4.0 (V4) - Draft
+# Version 4.0 (V4)
 
-This describes version 4.0 of the Pact file format, as well as associated behaviour for matching and verifying them. For all the changes, refer to the RFC [#71](https://github.com/pact-foundation/pact-specification/issues/71)
+This describes version 4.0 of the Pact file format, as well as associated behaviour for matching and verifying them. 
+For all the changes, refer to the RFC [#71](https://github.com/pact-foundation/pact-specification/issues/71)
 
 ## File format
 
@@ -70,26 +71,30 @@ For example:
 }
 ```
 
-|Field|Type|Description|
-|-----|----|-----------|
-|type|string|The type of the interaction (Synchronous/HTTP, Asynchronous/Messages, Synchronous/Messages, etc.)|
-|description|string|A description for the interaction. Must be unique within the Pact file|
-|key|string|Unique value for the interaction.|
+| Field               | Required? | Type                           | Description                                                                                          |
+|---------------------|-----------|--------------------------------|------------------------------------------------------------------------------------------------------|
+| type                | required  | string                         | The type of the interaction (Synchronous/HTTP, Asynchronous/Messages, Synchronous/Messages, etc.)    |
+| description         | required  | string                         | A description for the interaction. Must be unique within the Pact file                               |
+| key                 | optional  | string                         | Unique value for the interaction. Can be auto-generated if not specified.                            |
+| providerStates      | optional  | List[ProviderState]            | Provider states required to verify the interaction                                                   |
+| pending             | optional  | boolean                        | Mark this interaction as pending. See https://docs.pact.io/pact_broker/advanced_topics/pending_pacts |
+| comments            | optional  | Map[string, JSON]              | Comments that are applied to the interaction. See comments section below                             |
+| pluginConfiguration | optional  | Map[string, Map[string, JSON]] | Configuration applied by a plugin. See Pact plugins for more details                                 |
+| interactionMarkup   | optional  | InteractionMarkup              | Markup to use to render the interaction in a UI. This will be supplied when using plugins.           |
 
 #### Synchronous/HTTP
 
 This is the original Pact interaction (V1/V2), and represents a synchronous request/response, mainly executed over
 HTTP. It contains a request entity with all the HTTP attributes required to construct an HTTP request, and an 
-equivalent response. Each request and response also includes optional matching rules and generators. Provider states
-define the state that a provider needs to be in for the interaction to be successfully verified.
+equivalent response entity. Each request and response also includes optional matching rules and generators. 
+Provider states define the state that a provider needs to be in for the interaction to be successfully verified.
 
 Additional fields:
 
-|Field|Type|Description|
-|-----|----|-----------|
-|request|Request|The HTTP request part|
-|response|Response|The HTTP response part|
-|providerStates|List[ProviderState]|Provider states required to verify the interaction|
+| Field          | Type                | Description                                        |
+|----------------|---------------------|----------------------------------------------------|
+| request        | Request             | The HTTP request part                              |
+| response       | Response            | The HTTP response part                             |
 
 Example:
 
@@ -262,42 +267,211 @@ Example of a multi-part POST request with an image, which returns a JSON respons
 
 ##### Request
 
-Represents the request part of a HTTP request.
+Represents the request part of an HTTP request.
 
-|Field|Type|Description|
-|-----|----|-----------|
-|method|string|The HTTP method|
-|path|string|Request path|
-|query|Map[string, List[string]]|Request query string|
-|headers|Map[string, List[string]]|Request headers|
-|body|Body|Request body|
-|body|Body|Request body|
-|matchingRules|MatchingRules|Optional Matching rules to apply to the request|
-|generators|Generators|Optional generators to apply to the request|
+| Field         | Type                      | Description                                     |
+|---------------|---------------------------|-------------------------------------------------|
+| method        | string                    | The HTTP method                                 |
+| path          | string                    | Request path                                    |
+| query         | Map[string, List[string]] | Request query string                            |
+| headers       | Map[string, List[string]] | Request headers                                 |
+| body          | Body                      | Request body                                    |
+| matchingRules | MatchingRules             | Optional Matching rules to apply to the request |
+| generators    | Generators                | Optional generators to apply to the request     |
 
 ##### Response
 
-Represents the response part of a HTTP request.
+Represents the response part of an HTTP request.
 
-|Field|Type|Description|
-|-----|----|-----------|
-|status|number|The HTTP status code (100-599)|
-|headers|Map[string, List[string]]|Response headers|
-|body|Body|Response body|
-|matchingRules|MatchingRules|Optional Matching rules to apply to the response|
-|generators|Generators|Optional generators to apply to the response|
+| Field         | Type                      | Description                                      |
+|---------------|---------------------------|--------------------------------------------------|
+| status        | number                    | The HTTP status code (100-599)                   |
+| headers       | Map[string, List[string]] | Response headers                                 |
+| body          | Body                      | Response body                                    |
+| matchingRules | MatchingRules             | Optional Matching rules to apply to the response |
+| generators    | Generators                | Optional generators to apply to the response     |
 
 #### Asynchronous/Messages
 
 Asynchronous messages represent a one-way interaction between a provider and consumer. They were introduced in V3 as
 Message Pacts. Each message interaction has the following additional attributes:
 
-|Field|Type|Description|
-|-----|----|-----------|
-|contents|Body|The body of the message|
-|metadata|Map[string, Any JSON]|Key/value map of metadata associated with the message. Values can be any value that be stored as JSON.|
-|matchingRules|MatchingRules|Optional Matching rules to apply to the message|
-|generators|Generators|Optional generators to apply to the message|
+| Field         | Type              | Description                                                                                            |
+|---------------|-------------------|--------------------------------------------------------------------------------------------------------|
+| contents      | Body              | The body of the message                                                                                |
+| metadata      | Map[string, JSON] | Key/value map of metadata associated with the message. Values can be any value that be stored as JSON. |
+| matchingRules | MatchingRules     | Optional Matching rules to apply to the message                                                        |
+| generators    | Generators        | Optional generators to apply to the message                                                            |
+
+Example message interaction:
+```json
+{
+  "type": "Asynchronous/Messages",
+  "description": "Test Message",
+  "key": "m_001",
+  "metadata": {
+    "contentType": "application/json",
+    "destination": "a/b/c"
+  },
+  "providerStates": [
+    {
+      "name": "message exists"
+    }
+  ],
+  "contents": {
+    "contentType": "application/json",
+    "encoded": false,
+    "content": {
+      "a": "1234-1234"
+    }
+  },
+  "matchingRules": {
+    "content": {
+      "$.a": {
+        "matchers": [
+          {
+            "match": "regex",
+            "regex": "\\d+-\\d+"
+          }
+        ],
+        "combine": "AND"
+      }
+    }
+  },
+  "generators": {
+    "content": {
+      "a": {
+        "type": "Uuid"
+      }
+    }
+  }
+}
+```
+
+#### Synchronous/Messages
+
+Synchronous messages represent a request/response+ interaction between a provider and consumer. They represent
+non-HTTP interactions where a request message is sent to a provider, and one or more response messages are returned.
+Example interactions that would use this form are gRPC and Websockets.
+
+Each interaction has the following additional attributes:
+
+| Field    | Type                  | Description                                          |
+|----------|-----------------------|------------------------------------------------------|
+| request  | MessageContents       | The the request message that is sent to the provider |
+| response | List[MessageContents] | List of expected responses                           |
+
+Example synchronous message:
+
+```json
+{
+  "comments": {
+    "testname": "pact::test_proto_client"
+  },
+  "description": "init plugin request",
+  "interactionMarkup": {
+    "markup": "```protobuf\nmessage InitPluginRequest {\n    string implementation = 1;\n    string version = 2;\n}\n```\n```protobuf\nmessage InitPluginResponse {\n    message .io.pact.plugin.CatalogueEntry catalogue = 1;\n}\n```\n",
+    "markupType": "COMMON_MARK"
+  },
+  "key": "c05e8d0d3e683897",
+  "pending": false,
+  "pluginConfiguration": {
+    "protobuf": {
+      "descriptorKey": "347713ea68bb68288a09c8fd5350e928",
+      "service": "PactPlugin/InitPlugin"
+    }
+  },
+  "request": {
+    "contents": {
+      "content": "ChJwbHVnaW4tZHJpdmVyLXJ1c3QSBTAuMC4w",
+      "contentType": "application/protobuf;message=InitPluginRequest",
+      "contentTypeHint": "BINARY",
+      "encoded": "base64"
+    },
+    "matchingRules": {
+      "body": {
+        "$.request.implementation": {
+          "combine": "AND",
+          "matchers": [
+            {
+              "match": "notEmpty"
+            }
+          ]
+        },
+        "$.request.version": {
+          "combine": "AND",
+          "matchers": [
+            {
+              "match": "semver"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "response": [
+    {
+      "contents": {
+        "content": "CggIABIEdGVzdA==",
+        "contentType": "application/protobuf;message=InitPluginResponse",
+        "contentTypeHint": "BINARY",
+        "encoded": "base64"
+      },
+      "matchingRules": {
+        "body": {
+          "$.response.catalogue": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "values"
+              }
+            ]
+          },
+          "$.response.catalogue.*": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$.response.catalogue.key": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "notEmpty"
+              }
+            ]
+          },
+          "$.response.catalogue.type": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "CONTENT_MATCHER|CONTENT_GENERATOR"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "type": "Synchronous/Messages"
+}
+```
+
+##### MessageContents
+
+This entity stores the contents of a message. It has the following attributes:
+
+
+| Field         | Type              | Description                                                                                            |
+|---------------|-------------------|--------------------------------------------------------------------------------------------------------|
+| contents      | Body              | The body of the message                                                                                |
+| metadata      | Map[string, JSON] | Key/value map of metadata associated with the message. Values can be any value that be stored as JSON. |
+| matchingRules | MatchingRules     | Optional Matching rules to apply to the message                                                        |
+| generators    | Generators        | Optional generators to apply to the message                                                            |
+
 
 #### Provider states
 
@@ -305,10 +479,10 @@ The provider states store an indicator for the state that the provider needs to 
 verified. They contain a `description` and a key/value map of parameters. The values in the parameters
 can be any value that can be serialised to JSON.
 
-|Field|Type|Description|
-|-----|----|-----------|
-|name|string|Provider state name|
-|params|Map[string, Any JSON]|Optional Parameters|
+| Field  | Type              | Description         |
+|--------|-------------------|---------------------|
+| name   | string            | Provider state name |
+| params | Map[string, JSON] | Optional Parameters |
 
 ```json
 {
@@ -331,11 +505,22 @@ can be any value that can be serialised to JSON.
 
 Request/Response bodies and message contents are represented with an entity with the following attributes:
 
-|Field|Type|Description|
-|-----|----|-----------|
-|contentType|string|The content type of the body from the [IANA registry](https://www.iana.org/assignments/media-types/media-types.xhtml)|
-|encoded|string or false|If the body has been encoded (for example, with base64), the encoding used. Otherwise false. Note for JSON stored in string form, encoded should be `JSON`.|
-|contents|string or any JSON|If encoded, must be a string value. Otherwise, can be any JSON.|
+| Field           | Type            | Description                                                                                                                                                 |
+|-----------------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| contentType     | string          | The content type of the body from the [IANA registry](https://www.iana.org/assignments/media-types/media-types.xhtml)                                       |
+| encoded         | string or false | If the body has been encoded (for example, with base64), the encoding used. Otherwise false. Note for JSON stored in string form, encoded should be `JSON`. |
+| contents        | string or JSON  | If encoded, must be a string value. Otherwise, can be any JSON.                                                                                             |
+| contentTypeHint | string          | A hint to support how new types of content must be processed. Value must be `BINARY` or `TEXT`.                                                             |
+
+Example:
+```json
+{
+    "content": "Cg9wYWN0LWp2bS1kcml2ZXISBTAuMC4w",
+    "contentType": "application/protobuf; message=InitPluginRequest",
+    "contentTypeHint": "BINARY",
+    "encoded": "base64"
+}
+```
 
 #### Matching Rules
 
@@ -344,10 +529,10 @@ are string values, but the current supported ones are: body, header, path, query
 
 Each matching rule has the following attributes:
 
-|Field|Type|Description|
-|-----|----|-----------|
-|matchers|List[MatchingRule]|List of matching rules|
-|combine|AND or OR|Optional. Whether the results of applying the matching rules should be combined using an AND or OR operation.|
+| Field    | Type               | Description                                                                                                   |
+|----------|--------------------|---------------------------------------------------------------------------------------------------------------|
+| matchers | List[MatchingRule] | List of matching rules                                                                                        |
+| combine  | AND or OR          | Optional. Whether the results of applying the matching rules should be combined using an AND or OR operation. |
 
 All matching rules must have a `type` attribute, and can have any other attributes depending on the type.
 
@@ -410,9 +595,9 @@ a JSON Path like expression.
 The generators, just like matching rules, are stored as a key/value map where the key is the category that generators are applied to. Categories 
 are string values, but the current supported ones are: body, header, path, query, metadata, status.
 
-|Field|Type|Description|
-|-----|----|-----------|
-|generators|Map[string, Generator]|Map of categories to generators|
+| Field      | Type                   | Description                     |
+|------------|------------------------|---------------------------------|
+| generators | Map[string, Generator] | Map of categories to generators |
 
 All generators must have a `type` attribute, and can have any other attributes depending on the type.
 
