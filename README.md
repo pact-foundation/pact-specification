@@ -272,10 +272,11 @@ Example:
 #### Add more specific type matchers
 
 Type matchers sometimes need to be more specific. Sometimes just matching the type of the example is not enough. Dates
-and times are normally encoded as strings (these are addressed in proposal
-[Matching times and dates in a cross-platform manner](https://github.com/pact-foundation/pact-specification/tree/version-4#matching-times-and-dates-in-a-cross-platform-manner)). Sometimes
-numeric values need to be ensured that they match the specific numeric type. This is especially important for financial
-systems, where a rounding error can be catastrophic. The general type matcher will match 100 and 100.01.
+and times are normally encoded as strings. Sometimes numeric values need to be ensured that they match the specific numeric 
+type. This is especially important for financial systems, where a rounding error can be catastrophic. The general type 
+matcher will match 100 and 100.01.
+
+For dates and times, the format specfier is based on the [Java DateTimeFormatter](https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html).
 
 The following matchers have been added:
 
@@ -284,6 +285,9 @@ The following matchers have been added:
 | Integer | Matches the example by type, and ensures that the actual value is also an integer | `{ "match": "integer" }` |
 | Decimal | Matches the example by type, and ensures that the actual value is also a decimal number (has decimal places) | `{ "match": "decimal" }` |
 | Null | Matches only null values | `{ "match": "null" }` |
+| Timestamp	|	`{ "match": "datetime", "format": "yyyy-MM-dd HH:ss:mm" }`	|	Matches the string representation of a value against the datetime format |
+| Time	|	`{ "match": "time", "format": "HH:ss:mm" }`	|	Matches the string representation of a value against the time format |
+| Date	|	`{ "match": "date", "format": "yyyy-MM-dd" }`	|	Matches the string representation of a value against the date format |
 
 #### Introduce example generators
 
@@ -332,7 +336,7 @@ Currently supported generators:
 | RandomHexadecimal | digits  | Generates a random hexadecimal value (String) with the provided number of digits | `{ "type": "RandomHexadecimal", "digits": 8 }`
 | RandomString | size  | Generates a random string value of the provided size characters | `{ "type": "RandomString", "size": 20 }`
 | Regex | regex  | Generates a random string value from the provided regular expression | `{ "type": "Regex", "regex": "\\d{1,8}" }`
-| Uuid | | Generates a random UUID value | `{ "type": "Uuid" }`
+| Uuid | | Generates a random UUID value (simple format) | `{ "type": "Uuid" }`
 | Date | format (Optional) | Generates a Date value from the current date either in ISO format or using the provided format string | `{ "type": "Date", "format": "MM/dd/yyyy" }`
 | Time | format (Optional) | Generates a Time value from the current time either in ISO format or using the provided format string | `{ "type": "Time", "format": "HH:mm" }`
 | DateTime | format (Optional) | Generates a Date and Time (timestamp) value from the current date and time either in ISO format or using the provided format string | `{ "type": "DateTime", "format": "yyyy/MM/dd - HH:mm:ss.S" }`
@@ -499,6 +503,15 @@ The following matchers are supported:
 | MaxType | `{ "match": "type", "max": 10 }` | This executes a type based match against the values, that is, they are equal if they are the same type. In addition, if the values represent a collection, the length of the actual value is compared against the maximum. |
 | Integer | `{ "match": "integer" }` | Matches the example by type, and ensures that the actual value is also an integer  |
 | Decimal | `{ "match": "decimal" }` | Matches the example by type, and ensures that the actual value is also a decimal number (has decimal places) |
+| Number	|	`{ "match": "number" }`	| This checks if the type of the value is a number. |
+| Include |	`{ "match": "include", "value": "substr" }`	| This checks if the string representation of a value contains the substring. |
+| Timestamp	|	`{ "match": "datetime", "format": "yyyy-MM-dd HH:ss:mm" }`	|	Matches the string representation of a value against the datetime format |
+| Time	|	`{ "match": "time", "format": "HH:ss:mm" }`	|	Matches the string representation of a value against the time format |
+| Date	|	`{ "match": "date", "format": "yyyy-MM-dd" }`	|	Matches the string representation of a value against the date format |
+| Null	|	`{ "match": "null" }`	|	Match if the value is a null value (this is content specific, for JSON will match a JSON null) |
+| Boolean	|	`{ "match": "boolean" }`	|	Match if the value is a boolean value (booleans and the string values true and false) |
+| ContentType	|	`{ "match": "contentType", "value": "image/jpeg" }`	|	Match binary data by its content type (magic file check) |
+| Values	|	`{ "match": "values" }`	|	Match the values in a map, ignoring the keys |
 
 ## Example
 
