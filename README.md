@@ -448,7 +448,7 @@ Example synchronous message:
             "matchers": [
               {
                 "match": "regex",
-                "regex": "CONTENT_MATCHER|CONTENT_GENERATOR"
+                "regex": "^(CONTENT_MATCHER|CONTENT_GENERATOR)$"
               }
             ]
           }
