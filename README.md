@@ -28,6 +28,10 @@ present in a response. You can only verify what _is_.
 
 See this [gist](https://gist.github.com/bethesque/5a35a3c1cb9fdab6dce7) for an idea of where version 2.0 is came from.
 
+#### JSON Schema
+
+For a declarative, structured format of this version of the specification, see its [JSON Schema](https://raw.githubusercontent.com/pactflow/pact-schemas/main/dist/pact-schema-v2.json).
+
 #### Request matching
 
 ##### Request method
