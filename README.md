@@ -24,6 +24,10 @@ looser later, than to get stricter later.
 Note: One implications of this philosophy is that you cannot verify, using pact, that a key or a header will _not_ be
 present in a response. You can only verify what _is_.
 
+### JSON Schema
+
+For a declarative, structured format of this version of the specification, see its [JSON Schema](https://raw.githubusercontent.com/pactflow/pact-schemas/main/dist/pact-schema-v3.json).
+
 ### Version 3.0
 
 Version 3.0 introduces the following changes from 2.0:
