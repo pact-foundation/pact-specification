@@ -38,7 +38,7 @@ The default log level (if any) should be info.
 
 # Index
 
-* [JSON schemas](https://bitbucket.org/atlassian/pact-json-schema)
+* [JSON schemas](https://github.com/pactflow/pact-schemas) - Pact Specification as a series of JSON schemas. To see the key differences between versions, see https://github.com/pactflow/pact-schemas/blob/main/src/index.ts.
 
 * [Version 1](https://github.com/pact-foundation/pact-specification/tree/version-1) - A spec that describes the existing matching in the ruby implementation, and provides test cases for implementations in other languages to ensure that matching is consistent.
 
