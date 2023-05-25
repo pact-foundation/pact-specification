@@ -14,6 +14,10 @@ Note: One implications of this philosophy is that you cannot verify, using pact,
 
 ### Version 1.0.0
 
+#### JSON Schema
+
+For a declarative, structured format of this version of the specification, see its [JSON Schema](https://raw.githubusercontent.com/pactflow/pact-schemas/main/dist/pact-schema-v1.json).
+
 #### Request matching
 
 ##### Request method
