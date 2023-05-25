@@ -3,6 +3,10 @@
 This describes version 4.0 of the Pact file format, as well as associated behaviour for matching and verifying them. 
 For all the changes, refer to the RFC [#71](https://github.com/pact-foundation/pact-specification/issues/71)
 
+## JSON Schema
+
+For a declarative, structured format of this version of the specification, see its [JSON Schema](https://raw.githubusercontent.com/pactflow/pact-schemas/main/dist/pact-schema-v4.json).
+
 ## File format
 
 The V4 file is a JSON formatted text file with the following entities:
