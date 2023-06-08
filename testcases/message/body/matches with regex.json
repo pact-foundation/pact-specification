@@ -30,7 +30,7 @@
           "matchers": [
             {
               "match": "regex",
-              "regex": "red|blue"
+              "regex": "^(red|blue)$"
             }
           ]
         },
@@ -38,7 +38,7 @@
           "matchers": [
             {
               "match": "regex",
-              "regex": "red|blue"
+              "regex": "^(red|blue)$"
             }
           ]
         }
